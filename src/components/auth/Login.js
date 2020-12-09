@@ -26,7 +26,7 @@ export const Login = (props) => {
       .then((res) => {
         if (res.valid) {
           localStorage.setItem("cp_user", res.token)
-          props.history.push("/");
+          history.push("/");
         } else {
           invalidDialog.current.showModal();
         }
