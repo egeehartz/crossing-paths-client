@@ -4,25 +4,31 @@ import { Link } from "react-router-dom"
 export const NavBar = (props) => {
     return (
         <ul className="navbar">
-            <li className="navbar__item">
-                Navigation link
-            </li>
-            <li className="navbar__item">
-                Navigation link
-            </li>
-            <li className="navbar__item">
-                Navigation link
-            </li>
+            <Link className="navbar__item" to="/homepage">
+                Home
+            </Link>
+            <Link className="navbar__item" to="/">
+                Dashboard
+            </Link>
+            <Link className="navbar__item" to="/explore">
+                Explore
+            </Link>
+            <Link className="navbar__item" to="/create">
+                Create
+            </Link>
+            <Link className="navbar__item" to="/friends">
+                Friends
+            </Link>
             {
                 (localStorage.getItem("cp_user") !== null) ?
-                    <li className="nav-item">
-                        <button className="nav-link fakeLink"
+                    <div className="nav-item">
+                        <Link className="nav-link fakeLink"
+                            to="/"
                             onClick={() => {
                                 localStorage.removeItem("cp_user")
-                                props.history.push({ pathname: "/" })
                             }}
-                        >Logout</button>
-                    </li> :
+                        >Logout</Link>
+                    </div> :
                     <>
                         <li className="nav-item">
                             <Link className="nav-link" to="/login">Login</Link>

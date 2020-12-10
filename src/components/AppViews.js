@@ -6,6 +6,7 @@ import { UserProvider } from "./users/UserProvider"
 import { Dashboard } from "./users/Dashboard"
 import { Homepage } from "./users/Homepage"
 import { DesignForm } from "./designs/DesignForm"
+import { ExploreList } from "./designs/ExploreList"
 
 
 export const AppViews = props => (
@@ -19,6 +20,9 @@ export const AppViews = props => (
                     />
                     <Route path="/add"
                         render={props => <DesignForm {...props} />} 
+                    />
+                    <Route path="/explore"
+                        render={props => <ExploreList {...props} />} 
                     />
                 </UserProvider>
             </DesignProvider>
