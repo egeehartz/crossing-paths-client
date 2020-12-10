@@ -36,6 +36,7 @@ export const DesignProvider = (props) => {
             .then(res => res.json())
     }
 
+
     const getDesignByCat = (categoryId) => {
         return fetch(`http://localhost:8000/designs?category_id=${categoryId}` , {
             headers: {
