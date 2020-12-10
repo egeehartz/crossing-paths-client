@@ -1,20 +1,25 @@
 import React, { useContext, useEffect, useState } from "react"
 import { useForm, Controller } from "react-hook-form";
 import { CategoryContext } from "./CategoryProvider";
+import { DesignContext } from "./DesignProvider";
 
 
 
 export const DesignForm = () => {
     const { categories, getCategories } = useContext(CategoryContext)
+    const {addDesign} = useContext(DesignContext)
 
     useEffect(() => {
         getCategories()
     }, [])
 
     const { register, handleSubmit, control } = useForm();
-    const onSubmit = data => console.log(testAdd(data, designImg));
+    const onSubmit = data => {
+        const completeObj = addImageToData(data, designImg)
+        addDesign(completeObj)
+    } 
 
-    const testAdd = (dataObj, stateVar) => {
+    const addImageToData = (dataObj, stateVar) => {
         dataObj.designImg = stateVar
         return dataObj
     }
@@ -43,7 +48,7 @@ export const DesignForm = () => {
                 <input name="title" ref={register} placeholder="name" />
                 <label>Design Link:</label>
                 <input name="link" ref={register} placeholder="link" />
-                <select name="category" ref={register} >
+                <select name="categoryId" ref={register} >
                     <option value="0">Select a Category</option>
                     {
                         categories.map(c => <option value={c.id}>{c.label}</option>)
@@ -68,11 +73,23 @@ export const DesignForm = () => {
                     } // props contains: onChange, onBlur and value
                 />
 
-
-                {/* <fieldset>
-                    <label htmlFor="designImage">Image</label>
-                    <input className="register-input" type="file" id="designImage" onChange={(evt) => { createProfileImageJSON(evt) }} />
-                </fieldset> */}
+                <Controller
+                    name="public"
+                    control={control}
+                    // defaultValue={designImg}
+                    rules={{ required: true }}
+                    render={props =>
+                        <>
+                        <label>Make Design Public</label>
+                        <input
+                            className="register-input"
+                            type="checkbox"
+                            // id="designImage"
+                            onChange={e => props.onChange(e.target.checked)}
+                        />
+                        </>
+                    } // props contains: onChange, onBlur and value
+                />
 
 
 
