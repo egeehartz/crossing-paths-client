@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
+import { useHistory } from "react-router-dom"
 import { useForm, Controller } from "react-hook-form";
 import { CategoryContext } from "./CategoryProvider";
 import { DesignContext } from "./DesignProvider";
@@ -8,6 +9,7 @@ import { DesignContext } from "./DesignProvider";
 export const DesignForm = () => {
     const { categories, getCategories } = useContext(CategoryContext)
     const {addDesign} = useContext(DesignContext)
+    const history = useHistory()
 
     useEffect(() => {
         getCategories()
@@ -17,6 +19,9 @@ export const DesignForm = () => {
     const onSubmit = data => {
         const completeObj = addImageToData(data, designImg)
         addDesign(completeObj)
+        .then(() => {
+            history.push('/homepage')
+        })
     } 
 
     const addImageToData = (dataObj, stateVar) => {
@@ -55,9 +60,6 @@ export const DesignForm = () => {
                     }
 
                 </select>
-
-
-
                 <Controller
                     name="designImg"
                     control={control}
@@ -72,7 +74,6 @@ export const DesignForm = () => {
                         />
                     } // props contains: onChange, onBlur and value
                 />
-
                 <Controller
                     name="public"
                     control={control}
@@ -90,15 +91,6 @@ export const DesignForm = () => {
                         </>
                     } // props contains: onChange, onBlur and value
                 />
-
-
-
-
-
-
-
-
-
                 <input type="submit" />
             </form>
         </>
