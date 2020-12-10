@@ -2,9 +2,10 @@ import React from "react"
 import { Route } from "react-router-dom"
 import { CategoryProvider } from "./designs/CategoryProvider"
 import { DesignProvider } from "./designs/DesignProvider"
+import { UserProvider } from "./users/UserProvider"
 import { Dashboard } from "./users/Dashboard"
 import { Homepage } from "./users/Homepage"
-import { UserProvider } from "./users/UserProvider"
+import { DesignForm } from "./designs/DesignForm"
 
 
 export const AppViews = props => (
@@ -15,6 +16,9 @@ export const AppViews = props => (
                     <Route exact path="/" render={Dashboard} />
                     <Route exact path="/homepage"
                         render={(props) => <Homepage {...props} />}
+                    />
+                    <Route path="/add"
+                        render={props => <DesignForm {...props} />} 
                     />
                 </UserProvider>
             </DesignProvider>
