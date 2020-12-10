@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 import {Modal, ModalBody, ModalHeader, Button} from "reactstrap"
 import { CategoryContext } from "../designs/CategoryProvider"
 import { DesignContext } from "../designs/DesignProvider"
@@ -46,8 +47,12 @@ export const Homepage = () => {
             <Modal isOpen={modal} toggle={toggle} >
                 <ModalHeader toggle={toggle}>Add a Design!</ModalHeader>
                 <ModalBody>
+                    <Link to="/create">
                     <Button color="primary" onClick={toggle}>Create a New One</Button>{' '}
+                    </Link>
+                    <Link to="/add">
                     <Button color="secondary" onClick={toggle}>Upload an Existing design</Button>
+                    </Link>
                 </ModalBody>
             </Modal>
         </>
