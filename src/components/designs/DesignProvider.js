@@ -66,7 +66,7 @@ export const DesignProvider = (props) => {
                 "Content-Type": "application/json",
                 "Authorization": `Token ${localStorage.getItem("cp_user")}`
             },
-            body: JSON.stringify(Design)
+            body: JSON.stringify(design)
         })
             .then(getDesigns)
     }
@@ -78,7 +78,7 @@ export const DesignProvider = (props) => {
                 "Content-Type": "application/json",
                 "Authorization": `Token ${localStorage.getItem("cp_user")}`,
             },
-        body: JSON.stringify(DesignId)
+        body: JSON.stringify(designId)
         })
             .then(getDesigns)
     }

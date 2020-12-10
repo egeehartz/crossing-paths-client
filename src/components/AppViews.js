@@ -1,17 +1,24 @@
 import React from "react"
 import { Route } from "react-router-dom"
 import { CategoryProvider } from "./designs/CategoryProvider"
+import { DesignProvider } from "./designs/DesignProvider"
 import { Dashboard } from "./users/Dashboard"
 import { Homepage } from "./users/Homepage"
+import { UserProvider } from "./users/UserProvider"
 
 
 export const AppViews = props => (
     <>
         <CategoryProvider>
-            <Route exact path="/" render={Dashboard} />
-            <Route path="/homepage" render={Homepage} />
+            <DesignProvider>
+                <UserProvider>
+                    <Route exact path="/" render={Dashboard} />
+                    <Route exact path="/homepage"
+                        render={(props) => <Homepage {...props} />}
+                    />
+                </UserProvider>
+            </DesignProvider>
         </CategoryProvider>
-
 
         {/* 
         
