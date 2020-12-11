@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import {Modal, ModalBody, ModalHeader, Button} from "reactstrap"
 import { CategoryContext } from "../designs/CategoryProvider"
 import { DesignContext } from "../designs/DesignProvider"
-import { HomeDesigns } from "../designs/HomeDesigns"
+import { DesignList } from "../designs/DesignList"
 import { UserContext } from "./UserProvider"
 
 
@@ -39,7 +39,7 @@ export const Homepage = () => {
             <div>
                 {
                     userDesigns.map(d => {
-                        return <HomeDesigns key={d.id} design={d} />
+                        return <DesignList key={d.id} design={d} />
                     })
                 }
             </div>
