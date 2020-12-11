@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import {Modal, ModalBody, ModalHeader, Button} from "reactstrap"
 import { CategoryContext } from "../designs/CategoryProvider"
 import { DesignContext } from "../designs/DesignProvider"
@@ -8,18 +8,20 @@ import { UserContext } from "./UserProvider"
 
 
 
-export const Homepage = () => {
+export const FriendPage = () => {
     const { categories, getCategories } = useContext(CategoryContext)
     const { getDesignByUser } = useContext(DesignContext)
-    const { getCurrentUser } = useContext(UserContext)
+
+    const location = useLocation()
+    const friend = location.state.friend
+
 
     const [userDesigns, setUserDesigns] = useState([])
 
 
     useEffect(() => {
         getCategories()
-        getCurrentUser()
-            .then((user) => getDesignByUser(user.id))
+        getDesignByUser(friend.id)
             .then(setUserDesigns)
     }, [])
 
@@ -29,7 +31,7 @@ export const Homepage = () => {
 
     return (
         <>
-            <h1>Homepage</h1>
+            <h1>{friend.username}'s Page</h1>
             <div>
                 {
                     categories.map(c => <div>{c.label}</div>)
@@ -43,18 +45,6 @@ export const Homepage = () => {
                     })
                 }
             </div>
-            <button onClick={toggle}>+</button>
-            <Modal isOpen={modal} toggle={toggle} >
-                <ModalHeader toggle={toggle}>Add a Design!</ModalHeader>
-                <ModalBody>
-                    <Link to="/create">
-                    <Button color="primary" onClick={toggle}>Create a New One</Button>{' '}
-                    </Link>
-                    <Link to="/add">
-                    <Button color="secondary" onClick={toggle}>Upload an Existing design</Button>
-                    </Link>
-                </ModalBody>
-            </Modal>
         </>
     )
 }

@@ -1,19 +1,15 @@
-import React, {useState} from "react"
+import React from "react"
 import { useLocation } from "react-router-dom"
-import { Button, Tooltip } from "reactstrap"
-import "./HomeDesigns.css"
+import { Button } from "reactstrap"
+import "./DesignList.css"
 
 
 
 
-export const HomeDesigns = ({ design }) => {
+export const DesignList = ({ design }) => {
     const location = useLocation()
-    const [tooltipOpen, setTooltipOpen] = useState(false);
-    const toggle = () => setTooltipOpen(!tooltipOpen);
 
-    const clickMe = () => {
-        window.alert('you can click me!')
-    }
+    const splitLocation = location.pathname.split("/")
 
     return (
         <>
@@ -34,13 +30,17 @@ export const HomeDesigns = ({ design }) => {
                         <img className="image" src={design.design_img} />
                         <p>{design.category.label}</p>
 
+
+                        {/* design link rendering depending on /explore */}
                         {design.link !== "" ?
                             <a className="design_link"
                                 href={design.link} target="_blank">source</a> :
-                            location.pathname === "/explore" & design.link === "" ?
+                            (location.pathname === "/explore" || splitLocation[1] === "profile") && design.link === "" ?
                                 "" :
-                                location.pathname !== "/explore" & design.link === "" ?
+                                location.pathname !== "/explore" && design.link === "" ?
                                     <p>add link</p> : ""}
+
+
 
                         {/* add to board logic */}
                         {location.pathname === "/explore" ?

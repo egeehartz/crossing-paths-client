@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
 import { DesignContext } from "./DesignProvider"
-import { HomeDesigns } from "./HomeDesigns"
+import { DesignList } from "./DesignList"
 
 
 
@@ -20,7 +20,7 @@ export const ExploreList = () => {
         <div>
             {
                 eDesigns.map(d => {
-                    return <HomeDesigns key={d.id} design={d} />
+                    return <DesignList key={d.id} design={d} />
                 })
             }
         </div>

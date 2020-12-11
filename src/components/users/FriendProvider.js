@@ -44,9 +44,8 @@ export const FollowingsProvider = (props) => {
                 "Content-Type": "application/json",
                 "Authorization": `Token ${localStorage.getItem("cp_user")}`,
             },
-        body: JSON.stringify(DesignId)
+        body: JSON.stringify(followingId)
         })
-            .then(getDesigns)
     }
 
     return (
