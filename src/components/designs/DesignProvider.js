@@ -16,6 +16,16 @@ export const DesignProvider = (props) => {
             .then(setDesigns)
     }
 
+    const getExploreDesigns = () => {
+      return fetch("http://localhost:8000/designs/explore" , {
+            headers: {
+              Authorization: `Token ${localStorage.getItem("cp_user")}`,
+              "Content-Type": "application/json",
+            }
+          })
+            .then(res => res.json())
+    }
+
     const getDesignById = (id) => {
         return fetch(`http://localhost:8000/designs/${id}` , {
             headers: {
@@ -87,7 +97,7 @@ export const DesignProvider = (props) => {
 
     return (
         <DesignContext.Provider value={{
-            designs, addDesign, getDesigns, setDesigns, getDesignById, 
+            designs, addDesign, getDesigns, setDesigns, getDesignById, getExploreDesigns, 
             updateDesign, getDesignByCat, getDesignByUser, deleteDesign}}>
             {props.children}
         </DesignContext.Provider>
