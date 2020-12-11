@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react"
 import { FollowingsContext } from "./FriendProvider"
 import { UserContext } from "./UserProvider"
+import defaultImg from "./images/default.png"
 
 
 
@@ -27,7 +28,10 @@ export const FriendList = () => {
             {
                 friends.map(f => {
                     return <div>
-                        <img src={f.friend.profile_img} />
+                        {f.friend.profile_img === "" || f.friend.profile_img === null
+                    ? <img src={defaultImg} alt="default avatar smiley" width='50px' />
+                    : <img src={f.friend.profile_img} width='50px' />
+                }
                         {f.friend.full_name}
                         </div>
                 })
