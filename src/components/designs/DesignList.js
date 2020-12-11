@@ -9,6 +9,8 @@ import "./DesignList.css"
 export const DesignList = ({ design }) => {
     const location = useLocation()
 
+    const splitLocation = location.pathname.split("/")
+
     return (
         <>
             <div className="flip-card">
@@ -33,9 +35,9 @@ export const DesignList = ({ design }) => {
                         {design.link !== "" ?
                             <a className="design_link"
                                 href={design.link} target="_blank">source</a> :
-                            location.pathname === "/explore" & design.link === "" ?
+                            (location.pathname === "/explore" || splitLocation[1] === "profile") && design.link === "" ?
                                 "" :
-                                location.pathname !== "/explore" & design.link === "" ?
+                                location.pathname !== "/explore" && design.link === "" ?
                                     <p>add link</p> : ""}
 
 

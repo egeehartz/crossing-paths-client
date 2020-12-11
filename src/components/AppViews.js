@@ -9,6 +9,7 @@ import { DesignForm } from "./designs/DesignForm"
 import { ExploreList } from "./designs/ExploreList"
 import { FriendList } from "./users/FriendList"
 import { FollowingsProvider } from "./users/FriendProvider"
+import { FriendPage } from "./users/FriendPage"
 
 
 export const AppViews = props => (
@@ -29,6 +30,9 @@ export const AppViews = props => (
                     />
                     <Route path="/friends"
                         render={props => <FriendList {...props} />} 
+                    />
+                    <Route path="/profile/:friendId(\d+)"
+                        render={props => <FriendPage {...props} />} 
                     />
                     </FollowingsProvider>
                 </UserProvider>
