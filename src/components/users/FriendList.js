@@ -30,7 +30,7 @@ export const FriendList = () => {
                 friends.map(f => {
                     return <div>
                         {f.friend.profile_img === null || f.friend.profile_img === undefined
-                    ? <img src={defaultImg} alt="default avatar smiley" width='50px' />
+                    ? <img src={defaultImg} alt="default avatar smiley" width='50px' alt="profile picture" />
                     : <img src={f.friend.profile_img} width='50px' />
                 }
                         <Link to={{ pathname: `/profile/${f.friend.id}`, state:{friend: f} }}>

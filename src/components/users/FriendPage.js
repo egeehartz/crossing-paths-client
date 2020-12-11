@@ -1,10 +1,8 @@
 import React, { useContext, useEffect, useState } from "react"
-import { Link, useLocation } from "react-router-dom"
-import {Modal, ModalBody, ModalHeader, Button} from "reactstrap"
+import { useLocation } from "react-router-dom"
 import { CategoryContext } from "../designs/CategoryProvider"
 import { DesignContext } from "../designs/DesignProvider"
 import { DesignList } from "../designs/DesignList"
-import { UserContext } from "./UserProvider"
 
 
 
@@ -24,9 +22,6 @@ export const FriendPage = () => {
         getDesignByUser(friend.id)
             .then(setUserDesigns)
     }, [])
-
-    const [modal, setModal] = useState(false);
-    const toggle = () => setModal(!modal);
 
 
     return (

@@ -17,7 +17,7 @@ export const DesignList = ({ design }) => {
                 <div className="flip-card-inner">
                     <div className="flip-card-front">
                         <h4>{design.title}</h4>
-                        <img className="image" src={design.design_img} />
+                        <img className="image" src={design.design_img} alt="cross stitch pattern"/>
                     </div>
 
 
@@ -27,7 +27,7 @@ export const DesignList = ({ design }) => {
                         {location.pathname === "/explore" ?
                             <p>posted by {design.user.full_name}</p>
                             : ""}
-                        <img className="image" src={design.design_img} />
+                        <img className="image" src={design.design_img} alt="cross stitch pattern"/>
                         <p>{design.category.label}</p>
 
 
