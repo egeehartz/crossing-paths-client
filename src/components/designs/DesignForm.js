@@ -13,7 +13,7 @@ export const DesignForm = () => {
 
     useEffect(() => {
         getCategories()
-    }, [])
+    },[])
 
     const { register, handleSubmit, control } = useForm();
     const onSubmit = data => {

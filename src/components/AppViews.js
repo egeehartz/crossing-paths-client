@@ -10,6 +10,7 @@ import { ExploreList } from "./designs/ExploreList"
 import { FriendList } from "./users/FriendList"
 import { FollowingsProvider } from "./users/FriendProvider"
 import { FriendPage } from "./users/FriendPage"
+import { CreateDesign } from "./designs/CreateDesign"
 
 
 export const AppViews = props => (
@@ -33,6 +34,9 @@ export const AppViews = props => (
                     />
                     <Route path="/profile/:friendId(\d+)"
                         render={props => <FriendPage {...props} />} 
+                    />
+                    <Route path="/create"
+                        render={props => <CreateDesign {...props} />} 
                     />
                     </FollowingsProvider>
                 </UserProvider>
