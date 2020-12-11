@@ -21,7 +21,7 @@ export const Homepage = () => {
         getCurrentUser()
             .then((user) => getDesignByUser(user.id))
             .then(setUserDesigns)
-    }, [])
+    },[])
 
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);

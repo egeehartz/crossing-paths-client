@@ -21,7 +21,7 @@ export const FriendPage = () => {
         getCategories()
         getDesignByUser(friend.id)
             .then(setUserDesigns)
-    }, [])
+    },[friend])
 
 
     return (
