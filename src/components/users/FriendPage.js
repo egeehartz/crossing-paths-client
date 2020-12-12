@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { useLocation } from "react-router-dom"
+import { useLocation, useParams } from "react-router-dom"
 import { CategoryContext } from "../designs/CategoryProvider"
 import { DesignContext } from "../designs/DesignProvider"
 import { DesignList } from "../designs/DesignList"
@@ -10,18 +10,20 @@ export const FriendPage = () => {
     const { categories, getCategories } = useContext(CategoryContext)
     const { getDesignByUser } = useContext(DesignContext)
 
+    const params = useParams()
+    const friendId = parseInt(params.friendId)
+
     const location = useLocation()
-    const friend = location.state.friend
-
-
+    const friend = location.state.friendObj.friend    
+    
     const [userDesigns, setUserDesigns] = useState([])
 
-
+    
     useEffect(() => {
         getCategories()
-        getDesignByUser(friend.id)
+        getDesignByUser(friendId)
             .then(setUserDesigns)
-    },[friend])
+    },[])
 
 
     return (

@@ -1,15 +1,25 @@
-import React from "react"
+import React, {useState, useContext} from "react"
 import { useLocation } from "react-router-dom"
-import { Button } from "reactstrap"
+import { Modal, ModalBody, ModalHeader, Button } from "reactstrap"
+import { FollowingsContext } from "../users/FriendProvider"
 import "./DesignList.css"
 
 
 
 
 export const DesignList = ({ design }) => {
+    const {createFollowing} = useContext(FollowingsContext)
     const location = useLocation()
 
     const splitLocation = location.pathname.split("/")
+
+    const [modal, setModal] = useState(false);
+    const toggle = () => setModal(!modal);
+
+    const constructFollow = () => {
+        createFollowing({friendId: design.user.id})
+        .then(toggle)
+    }
 
     return (
         <>
@@ -17,17 +27,25 @@ export const DesignList = ({ design }) => {
                 <div className="flip-card-inner">
                     <div className="flip-card-front">
                         <h4>{design.title}</h4>
-                        <img className="image" src={design.design_img} alt="cross stitch pattern"/>
+                        <img className="image" src={design.design_img} alt="cross stitch pattern" />
                     </div>
 
 
                     <div className="flip-card-back">
                         <h4>{design.title}</h4>
+
                         {/* posted by logic */}
                         {location.pathname === "/explore" ?
-                            <p>posted by {design.user.full_name}</p>
+                            <p>
+                                posted by
+                                <button onClick={toggle}>
+                                    {design.user.full_name}
+                                </button>
+                            </p>
                             : ""}
-                        <img className="image" src={design.design_img} alt="cross stitch pattern"/>
+
+
+                        <img className="image" src={design.design_img} alt="cross stitch pattern" />
                         <p>{design.category.label}</p>
 
 
@@ -47,7 +65,16 @@ export const DesignList = ({ design }) => {
                             <Button>+</Button>
                             : ""}
 
-                       
+
+                        {/* Modal to Follow User */}
+                        <Modal isOpen={modal} toggle={toggle} >
+                            <ModalHeader toggle={toggle}>Follow {design.user.username}</ModalHeader>
+                            <ModalBody>
+                                    <Button color="primary" onClick={constructFollow}>Follow!</Button>{' '}
+                                    <Button color="secondary" onClick={toggle}>nevermind</Button>
+                            </ModalBody>
+                        </Modal>
+
                     </div>
                 </div>
             </div>
