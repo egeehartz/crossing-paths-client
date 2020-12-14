@@ -24,6 +24,7 @@ export const FriendList = () => {
     const results = users.filter(u =>
         u.user.username.toLowerCase().includes(searchTerm)
     );
+
     setSearchResults(results);
     }, [searchTerm]);
     

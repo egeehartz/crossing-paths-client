@@ -47,8 +47,8 @@ export const DesignProvider = (props) => {
     }
 
 
-    const getDesignByCat = (categoryId) => {
-        return fetch(`http://localhost:8000/designs?category_id=${categoryId}` , {
+    const getDesignsByUserAndCategory = (userId, categoryId) => {
+        return fetch(`http://localhost:8000/designs?user_id=${userId}&category_id=${categoryId}` , {
             headers: {
               Authorization: `Token ${localStorage.getItem("cp_user")}`,
               "Content-Type": "application/json",   
@@ -98,7 +98,7 @@ export const DesignProvider = (props) => {
     return (
         <DesignContext.Provider value={{
             designs, addDesign, getDesigns, setDesigns, getDesignById, getExploreDesigns, 
-            updateDesign, getDesignByCat, getDesignByUser, deleteDesign}}>
+            updateDesign, getDesignsByUserAndCategory, getDesignByUser, deleteDesign}}>
             {props.children}
         </DesignContext.Provider>
     )
