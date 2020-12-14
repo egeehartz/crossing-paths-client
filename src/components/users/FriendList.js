@@ -8,10 +8,11 @@ import defaultImg from "./images/default.png"
 
 
 export const FriendList = () => {
-    const {getCurrentUser, getUsers, users} = useContext(UserContext)
+    const {getCurrentUser, getUsers, users, getUsersToFollow} = useContext(UserContext)
     const {getFriendsByFollower} = useContext(FollowingsContext)
 
     const [friends, setFriends] = useState([])
+    const [potentialFriends, setPotentialFriends] = useState([])
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([]);
 
@@ -22,7 +23,7 @@ export const FriendList = () => {
 
     useEffect(() => {
         if (searchTerm !== "") {
-            const results = users.filter(u =>
+            const results = potentialFriends.filter(u =>
                 u.user.username.toLowerCase().includes(searchTerm)
             )
         
@@ -37,6 +38,9 @@ export const FriendList = () => {
         .then(user => {
             getFriendsByFollower(user.id)
             .then(setFriends)
+        })
+        .then(() => {
+            getUsersToFollow().then(setPotentialFriends)
         })
     },[])
 

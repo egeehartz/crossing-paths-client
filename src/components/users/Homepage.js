@@ -17,7 +17,7 @@ export const Homepage = () => {
     const [userDesigns, setUserDesigns] = useState([])
     const [user, setUser] = useState([])
     const [all, setAll] = useState(true)
-    const [categorySelected, setCategorySelected] = useState(null)
+    const [categorySelected, setCategorySelected] = useState("")
 
     useEffect(() => {
         getCategories()
@@ -61,7 +61,7 @@ export const Homepage = () => {
             <div>
                 {
                     categories.map(c => {
-                        return <div key={c.id}>
+                        return <div key={"c", c.id}>
                             <input
                                 type="radio"
                                 value={c.id}

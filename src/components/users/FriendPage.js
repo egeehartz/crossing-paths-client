@@ -18,7 +18,7 @@ export const FriendPage = () => {
     
     const [userDesigns, setUserDesigns] = useState([])
     const [all, setAll] = useState(true)
-    const [categorySelected, setCategorySelected] = useState(null)
+    const [categorySelected, setCategorySelected] = useState("")
 
     
     useEffect(() => {
