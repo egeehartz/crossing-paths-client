@@ -21,12 +21,14 @@ export const FriendList = () => {
       };
 
     useEffect(() => {
-    const results = users.filter(u =>
-        u.user.username.toLowerCase().includes(searchTerm)
-    );
-
-    setSearchResults(results);
-    }, [searchTerm]);
+        if (searchTerm !== "") {
+            const results = users.filter(u =>
+                u.user.username.toLowerCase().includes(searchTerm)
+            )
+        
+            setSearchResults(results);
+        }
+    }, [searchTerm])
     
     
     useEffect(() => {

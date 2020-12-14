@@ -8,7 +8,7 @@ import { DesignList } from "../designs/DesignList"
 
 export const FriendPage = () => {
     const { categories, getCategories } = useContext(CategoryContext)
-    const { getDesignByUser } = useContext(DesignContext)
+    const { getDesignByUser, getDesignsByUserAndCategory } = useContext(DesignContext)
 
     const params = useParams()
     const friendId = parseInt(params.friendId)
@@ -17,13 +17,31 @@ export const FriendPage = () => {
     const friend = location.state.friendObj.friend    
     
     const [userDesigns, setUserDesigns] = useState([])
+    const [all, setAll] = useState(true)
+    const [categorySelected, setCategorySelected] = useState(null)
 
     
     useEffect(() => {
         getCategories()
         getDesignByUser(friendId)
             .then(setUserDesigns)
-    },[])
+    },[all])
+
+    useEffect(() => {
+        //if categorySelected is empty, don't do anything (avoids error in the network tab)
+        if(categorySelected !== ""){
+            const userId = friendId
+            setAll(false)
+            getDesignsByUserAndCategory(userId, categorySelected)
+                .then(setUserDesigns)
+        } 
+    }, [categorySelected])
+
+    //resets the state variables tracking the radio buttons
+    const clearFilterButton = () => {
+        setCategorySelected("")
+        setAll(true)
+    }
 
 
     return (
@@ -31,8 +49,28 @@ export const FriendPage = () => {
             <h1>{friend.username}'s Page</h1>
             <div>
                 {
-                    categories.map(c => <div>{c.label}</div>)
+                    categories.map(c => {
+                        return <div key={c.id}>
+                            <input
+                                type="radio"
+                                value={c.id}
+                                name="categories"
+                                onChange={() => { setCategorySelected(c.id) }}
+                            />{" "}
+                            {c.label}
+                        </div>
+                    })
+
                 }
+                <div>
+                    <input
+                    type="radio"
+                    value={0}
+                    name="categories"
+                    onChange={clearFilterButton}
+                    />{" "}
+                    All
+                </div>
             </div>
             <br />
             <div>
