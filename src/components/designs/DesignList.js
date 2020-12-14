@@ -1,15 +1,20 @@
-import React, {useState, useContext} from "react"
+import React, {useState, useContext, useRef} from "react"
 import { useLocation } from "react-router-dom"
 import { Modal, ModalBody, ModalHeader, Button } from "reactstrap"
+import ContentEditable from 'react-contenteditable'
 import { FollowingsContext } from "../users/FriendProvider"
 import "./DesignList.css"
+import { DesignContext } from "./DesignProvider"
 
 
 
 
 export const DesignList = ({ design }) => {
+    const {changeDesignTitle} = useContext(DesignContext)
     const {createFollowing} = useContext(FollowingsContext)
     const location = useLocation()
+
+    const titleRef = useRef(null)
 
     const splitLocation = location.pathname.split("/")
 
@@ -19,6 +24,13 @@ export const DesignList = ({ design }) => {
     const constructFollow = () => {
         createFollowing({friendId: design.user.id})
         .then(toggle)
+    }
+
+    const handleSubmit = (e) => {
+        changeDesignTitle({
+                    id: design.id,
+                    title: titleRef.current.textContent             
+                })
     }
 
     return (
@@ -32,7 +44,11 @@ export const DesignList = ({ design }) => {
 
 
                     <div className="flip-card-back">
+                        {location.pathname === "/homepage" ?
+                        <ContentEditable innerRef={titleRef} onChange={(e) => handleSubmit(e)} id={design.id} html={design.title}/> : 
+                        // <h4>{design.title}</h4> :
                         <h4>{design.title}</h4>
+                        }
 
                         {/* posted by logic */}
                         {location.pathname === "/explore" ?
