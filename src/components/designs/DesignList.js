@@ -9,7 +9,8 @@ import { DesignContext } from "./DesignProvider"
 
 
 
-export const DesignList = ({ design }) => {
+export const DesignList = ({design , func}) => {
+
     const {changeDesignTitle} = useContext(DesignContext)
     const {createFollowing} = useContext(FollowingsContext)
     const location = useLocation()
@@ -31,6 +32,8 @@ export const DesignList = ({ design }) => {
                     id: design.id,
                     title: titleRef.current.textContent             
                 })
+        .then(() => {
+            func()})
     }
 
     return (
