@@ -38,11 +38,21 @@ export const UserProvider = (props) => {
             .then(response => response.json())     
     }
 
+    const getUsersToFollow = () => {
+      return fetch(`http://localhost:8000/users/people_to_follow`, {
+            headers: {
+                Authorization: `Token ${localStorage.getItem("cp_user")}`,
+                "Content-Type": "application/json",
+              }
+        })
+            .then(response => response.json())
+    }
+
     
     return (
         <UserContext.Provider value={{
             users, getUsers, setUsers, getUserById, getCurrentUser, 
-            setCurrentUser, currentUser}}>
+            setCurrentUser, currentUser, getUsersToFollow}}>
             {props.children}
         </UserContext.Provider>
     )

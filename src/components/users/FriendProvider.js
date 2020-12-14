@@ -25,14 +25,14 @@ export const FollowingsProvider = (props) => {
             .then(res => res.json())
     }
 
-    const createFollowing = subscriptionObj => {
+    const createFollowing = friend => {
         return fetch("http://localhost:8000/follows", {
             method: "POST",
             headers: {
                 Authorization: `Token ${localStorage.getItem("cp_user")}`,
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(subscriptionObj)
+            body: JSON.stringify(friend)
         })
             .then(res => res.json())
     }
