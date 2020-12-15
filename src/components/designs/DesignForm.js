@@ -12,6 +12,8 @@ export const DesignForm = () => {
     const {addDesign, getDesignById, updateDesign} = useContext(DesignContext)
     const history = useHistory()
     
+    const { handleSubmit, control } = useForm();
+    
     const params = useParams()
     const editMode = params.hasOwnProperty("designId")
 
@@ -23,7 +25,6 @@ export const DesignForm = () => {
                                                 public: false
                                                         })
 
-console.log(designObj)
 
     useEffect(() => {
         if (editMode) {
@@ -36,10 +37,8 @@ console.log(designObj)
         }
     },[])
 
-    const { handleSubmit, control } = useForm();
 
     const refactorOnChange = (e) => {
-        console.log(e.target)
         const newDesign = Object.assign({}, designObj)  
         if(e.target.name === "public") {
             newDesign[e.target.name] = e.target.checked 

@@ -81,24 +81,6 @@ export const DesignProvider = (props) => {
             .then(getDesigns)
     }
 
-    const changeDesignTitle = (designTitle) => {
-      /*
-      const designTitle = {
-        id: #,
-        title: "title"
-      }
-      */
-      return fetch(`http://localhost:8000/designs/${designTitle.id}/change_title`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Token ${localStorage.getItem("cp_user")}`
-            },
-            body: JSON.stringify(designTitle)
-        })
-            .then(getDesigns)
-    }
-
     const deleteDesign = (designId) => {
         return fetch(`http://localhost:8000/designs/${designId}`, {
             method: "DELETE",
@@ -115,7 +97,7 @@ export const DesignProvider = (props) => {
     return (
         <DesignContext.Provider value={{
             designs, addDesign, getDesigns, setDesigns, getDesignById, getExploreDesigns, 
-            updateDesign, getDesignsByUserAndCategory, getDesignByUser, deleteDesign, changeDesignTitle}}>
+            updateDesign, getDesignsByUserAndCategory, getDesignByUser, deleteDesign}}>
             {props.children}
         </DesignContext.Provider>
     )

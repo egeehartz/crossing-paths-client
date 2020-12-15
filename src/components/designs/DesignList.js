@@ -3,12 +3,13 @@ import { useLocation, useHistory } from "react-router-dom"
 import { Modal, ModalBody, ModalHeader, Button } from "reactstrap"
 import { FollowingsContext } from "../users/FriendProvider"
 import "./DesignList.css"
+import { DesignContext } from "./DesignProvider"
 
 
 
 
 export const DesignList = ({design, category, func}) => {
-
+    const {deleteDesign} = useContext(DesignContext)
     const {createFollowing} = useContext(FollowingsContext)
     const location = useLocation()
     const history = useHistory()
@@ -72,7 +73,10 @@ export const DesignList = ({design, category, func}) => {
                         {/* edit/delete logic */}
                         {location.pathname === "/homepage" ?
                         <>
-                            <Button>X</Button>
+                            <Button onClick={() => {
+                                deleteDesign(design.id)
+                                .then(func)
+                            }}>X</Button>
                             <Button 
                                 onClick={() =>{
                                     history.push(`/edit/${design.id}`)
