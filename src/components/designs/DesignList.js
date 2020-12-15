@@ -1,15 +1,19 @@
 import React, {useState, useContext} from "react"
-import { useLocation } from "react-router-dom"
+import { useLocation, useHistory } from "react-router-dom"
 import { Modal, ModalBody, ModalHeader, Button } from "reactstrap"
 import { FollowingsContext } from "../users/FriendProvider"
 import "./DesignList.css"
+import { DesignContext } from "./DesignProvider"
 
 
 
 
-export const DesignList = ({ design }) => {
+export const DesignList = ({design, category, func}) => {
+    const {deleteDesign} = useContext(DesignContext)
     const {createFollowing} = useContext(FollowingsContext)
     const location = useLocation()
+    const history = useHistory()
+
 
     const splitLocation = location.pathname.split("/")
 
@@ -21,6 +25,7 @@ export const DesignList = ({ design }) => {
         .then(toggle)
     }
 
+
     return (
         <>
             <div className="flip-card">
@@ -29,7 +34,6 @@ export const DesignList = ({ design }) => {
                         <h4>{design.title}</h4>
                         <img className="image" src={design.design_img} alt="cross stitch pattern" />
                     </div>
-
 
                     <div className="flip-card-back">
                         <h4>{design.title}</h4>
@@ -63,6 +67,21 @@ export const DesignList = ({ design }) => {
                         {/* add to board logic */}
                         {location.pathname === "/explore" ?
                             <Button>+</Button>
+                            : ""}
+
+
+                        {/* edit/delete logic */}
+                        {location.pathname === "/homepage" ?
+                        <>
+                            <Button onClick={() => {
+                                deleteDesign(design.id)
+                                .then(func)
+                            }}>X</Button>
+                            <Button 
+                                onClick={() =>{
+                                    history.push(`/edit/${design.id}`)
+                                }}>EDIT</Button>
+                        </>
                             : ""}
 
 

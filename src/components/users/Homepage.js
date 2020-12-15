@@ -17,7 +17,11 @@ export const Homepage = () => {
     const [userDesigns, setUserDesigns] = useState([])
     const [user, setUser] = useState([])
     const [all, setAll] = useState(true)
-    const [categorySelected, setCategorySelected] = useState("")
+    const [categorySelected, setCategorySelected] = useState(0)
+
+
+    const [changeHeard, setChange] = useState(true)
+    const toggleChange = () => {changeHeard ? setChange(false) : setChange(true)}
 
     useEffect(() => {
         getCategories()
@@ -27,7 +31,7 @@ export const Homepage = () => {
                 getDesignByUser(user.id)
                     .then(setUserDesigns)
             })
-    }, [all])
+    }, [changeHeard])
 
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
@@ -35,18 +39,25 @@ export const Homepage = () => {
 
     useEffect(() => {
         //if categorySelected is empty, don't do anything (avoids error in the network tab)
-        if(categorySelected !== ""){
+        if(categorySelected !== 0){
             const userId = user.id
             setAll(false)
             getDesignsByUserAndCategory(userId, categorySelected)
                 .then(setUserDesigns)
-        } 
+        } else {
+            getCurrentUser()
+            .then((user) => {
+                setUser(user)
+                getDesignByUser(user.id)
+                    .then(setUserDesigns)
+            })
+        }
     }, [categorySelected])
 
 
     //resets the state variables tracking the radio buttons
     const clearFilterButton = () => {
-        setCategorySelected("")
+        setCategorySelected(0)
         setAll(true)
     }
 
@@ -74,20 +85,16 @@ export const Homepage = () => {
 
                 }
                 <div>
-                    <input
-                    type="radio"
-                    value={0}
-                    name="categories"
-                    onChange={clearFilterButton}
-                    />{" "}
+                    <button onClick={clearFilterButton}>
                     All
+                    </button>
                 </div>
             </div>
             <br />
             <div>
                 {
                     userDesigns.map(d => {
-                        return <DesignList key={d.id} design={d} />
+                        return <DesignList key={d.id} design={d} categeory={categorySelected} func={toggleChange}/>
                     })
                 }
             </div>

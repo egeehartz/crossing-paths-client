@@ -55,7 +55,6 @@ export const DesignProvider = (props) => {
             }
           })
             .then(res => res.json())
-            //.then(setDesigns)
     }
 
     const addDesign = design => {

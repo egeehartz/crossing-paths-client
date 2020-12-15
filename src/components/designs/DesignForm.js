@@ -1,34 +1,80 @@
 import React, { useContext, useEffect, useState } from "react"
-import { useHistory } from "react-router-dom"
+import { useHistory, useParams } from "react-router-dom"
 import { useForm, Controller } from "react-hook-form";
 import { CategoryContext } from "./CategoryProvider";
 import { DesignContext } from "./DesignProvider";
+import "./DesignForm.css"
 
 
 
 export const DesignForm = () => {
     const { categories, getCategories } = useContext(CategoryContext)
-    const {addDesign} = useContext(DesignContext)
+    const {addDesign, getDesignById, updateDesign} = useContext(DesignContext)
     const history = useHistory()
+    
+    const { handleSubmit, control } = useForm();
+    
+    const params = useParams()
+    const editMode = params.hasOwnProperty("designId")
+
+    const [designObj, setDesignObj] = useState({
+                                                title: "",
+                                                link: "",
+                                                category_id: 0,
+                                                design_img: null,
+                                                public: false
+                                                        })
+
 
     useEffect(() => {
-        getCategories()
+        if (editMode) {
+            const designId = parseInt(params.designId)
+            getCategories()
+            getDesignById(designId)
+            .then(setDesignObj)
+        } else {
+            getCategories()
+        }
     },[])
 
-    const { register, handleSubmit, control } = useForm();
-    const onSubmit = data => {
-        const completeObj = addImageToData(data, designImg)
-        addDesign(completeObj)
-        .then(() => {
-            history.push('/homepage')
+
+    const refactorOnChange = (e) => {
+        const newDesign = Object.assign({}, designObj)  
+        if(e.target.name === "public") {
+            newDesign[e.target.name] = e.target.checked 
+        }   else {
+            newDesign[e.target.name] = e.target.value  
+        }     
+        setDesignObj(newDesign) 
+    }
+
+    const onSubmit = data => {    
+        if (editMode) {
+            if(designImg !== '') {
+                const completeObj = addImageToData(designObj, designImg)
+                updateDesign(completeObj)
+                .then(() => {
+                    history.push('/homepage')
+                })
+            } else {
+                updateDesign(designObj)
+                .then(() => {
+                    history.push('/homepage')
+                })
+            }
+        } else {
+            const completeObj = addImageToData(designObj, designImg)
+            addDesign(completeObj)
+            .then(() => {
+                history.push('/homepage')
         })
+        }
     } 
 
     const addImageToData = (dataObj, stateVar) => {
-        dataObj.designImg = stateVar
+        dataObj.design_img = stateVar
         return dataObj
     }
-
 
     const [designImg, setDesignImg] = useState('')
 
@@ -47,51 +93,112 @@ export const DesignForm = () => {
 
     return (
         <>
-            <h1>Add a New Design!</h1>
+            {editMode ? <h1>Edit Design</h1> : <h1>Add a New Design!</h1>}
             <form onSubmit={handleSubmit(onSubmit)}>
-                <label>Design Name:</label>
-                <input name="title" ref={register} placeholder="name" />
-                <label>Design Link:</label>
-                <input name="link" ref={register} placeholder="link" />
-                <select name="categoryId" ref={register} >
-                    <option value="0">Select a Category</option>
-                    {
-                        categories.map(c => <option value={c.id}>{c.label}</option>)
-                    }
+                    <Controller name="title" 
+                                control={control} 
+                                defaultValue={designObj.title} 
+                                render={props =>
+                                    <>
+                                    <label className="publicLabel">Design Name</label>
+                                    <input
+                                        className="register-input"
+                                        defaultValue={designObj.title}
+                                        type="text"
+                                        name="title"
+                                        onChange={e => {
+                                            refactorOnChange(e)}}
+                                    />
+                                    </> 
+                                }/>
+                    <Controller name="link" 
+                                control={control} 
+                                defaultValue={designObj.link} 
+                                render={props =>
+                                    <>
+                                    <label className="publicLabel">Design Link</label>
+                                    <input
+                                        className="register-input"
+                                        name="link" 
+                                        defaultValue={designObj.link} 
+                                        type="text"
+                                        onChange={e => {
+                                            refactorOnChange(e)}}
+                                    />
+                                    </> 
+                                }/>
 
-                </select>
+                    <Controller name="categoryId" 
+                                control={control} 
+                                defaultValue={designObj.category_id} 
+                                render={props =>
+                                    <>
+                                    <label>Design Progress:</label>
+                                    <select name="category_id" onChange={e => {
+                                            refactorOnChange(e)}} 
+                                            className="designInput"
+                                            defaultValue={designObj.category_id} >
+                                        <option value="0">Select a Category</option>
+                                        {
+                                            categories.map(c => <option value={c.id}>{c.label}</option>)
+                                        }
+
+                                    </select>
+                                    </> 
+                                }/>
                 <Controller
-                    name="designImg"
+                    name="design_img"
                     control={control}
-                    // defaultValue={designImg}
+                    defaultValue={designObj.design_img}
                     rules={{ required: false }}
                     render={props =>
+                        <>
+                        {editMode ? 
+                        <>
+                        <label>Image Chosen:</label>
+                        <img src={designObj.design_img} width="150px" /> 
+                        <label>Change Image:</label>
+                        </>
+                        : <label>Image:</label>}
                         <input
-                            className="register-input"
+                        defaultValue={designObj.design_img}
+                        className="designInput chooseFile"
                             type="file"
+                            name="design_img"
                             // id="designImage"
                             onChange={e => createProfileImageJSON(e)}
                         />
-                    } // props contains: onChange, onBlur and value
+                        </>
+                    }
                 />
                 <Controller
+                    className="designInput"
                     name="public"
                     control={control}
-                    // defaultValue={designImg}
-                    rules={{ required: true }}
+                    defaultValue={designObj.public}
+                    rules={{ required: false }}
                     render={props =>
                         <>
-                        <label>Make Design Public</label>
+                        <div className="checkbox-public">
+                      
+                        <label className="publicLabel">Make Design Public</label>
                         <input
+                            // defaultValue={designObj.public}
                             className="register-input"
                             type="checkbox"
-                            // id="designImage"
-                            onChange={e => props.onChange(e.target.checked)}
+                            name="public"
+                            checked= {designObj.public}
+                            onChange={e => {
+                                refactorOnChange(e)}}
                         />
+                        </div>
                         </>
-                    } // props contains: onChange, onBlur and value
+                    }
                 />
-                <input type="submit" />
+
+
+
+                <input className="submitButton" type="submit" />
             </form>
         </>
     )
