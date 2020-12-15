@@ -36,29 +36,20 @@ console.log(designObj)
         }
     },[])
 
-    /*
-    const handleControlledInputChange = (browserEvent) => {
-        const newEvent = Object.assign({}, event)          
-        newEvent[browserEvent.target.name] = browserEvent.target.value  
-        setEvent(newEvent)                         
-            
-    }
-    */
-
-    const { register, handleSubmit, control } = useForm();
+    const { handleSubmit, control } = useForm();
 
     const refactorOnChange = (e) => {
-        const newDesign = Object.assign({}, designObj)          
-        console.log(e.target.name)
-        newDesign[e.target.name] = e.target.value  
+        console.log(e.target)
+        const newDesign = Object.assign({}, designObj)  
+        if(e.target.name === "public") {
+            newDesign[e.target.name] = e.target.checked 
+        }   else {
+            newDesign[e.target.name] = e.target.value  
+        }     
         setDesignObj(newDesign) 
-        console.log(designObj, "???")
     }
-    const onSubmit = data => {
-        console.log(designImg, "img")
-        console.log(designObj, "onSubmit")
 
-        
+    const onSubmit = data => {    
         if (editMode) {
             if(designImg !== '') {
                 const completeObj = addImageToData(designObj, designImg)
@@ -73,7 +64,7 @@ console.log(designObj)
                 })
             }
         } else {
-            const completeObj = addImageToData(data, designImg)
+            const completeObj = addImageToData(designObj, designImg)
             addDesign(completeObj)
             .then(() => {
                 history.push('/homepage')
@@ -193,10 +184,11 @@ console.log(designObj)
                       
                         <label className="publicLabel">Make Design Public</label>
                         <input
-                            defaultValue={designObj.public}
+                            // defaultValue={designObj.public}
                             className="register-input"
                             type="checkbox"
-                            checked= {props.value}
+                            name="public"
+                            checked= {designObj.public}
                             onChange={e => {
                                 refactorOnChange(e)}}
                         />
