@@ -1,5 +1,5 @@
-import React, {useState, useContext, useRef} from "react"
-import { useLocation } from "react-router-dom"
+import React, {useState, useContext} from "react"
+import { useLocation, useHistory } from "react-router-dom"
 import { Modal, ModalBody, ModalHeader, Button } from "reactstrap"
 import { FollowingsContext } from "../users/FriendProvider"
 import "./DesignList.css"
@@ -11,6 +11,7 @@ export const DesignList = ({design, category, func}) => {
 
     const {createFollowing} = useContext(FollowingsContext)
     const location = useLocation()
+    const history = useHistory()
 
 
     const splitLocation = location.pathname.split("/")
@@ -72,7 +73,10 @@ export const DesignList = ({design, category, func}) => {
                         {location.pathname === "/homepage" ?
                         <>
                             <Button>X</Button>
-                            <Button>EDIT</Button>
+                            <Button 
+                                onClick={() =>{
+                                    history.push(`/edit/${design.id}`)
+                                }}>EDIT</Button>
                         </>
                             : ""}
 

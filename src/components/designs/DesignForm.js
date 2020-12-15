@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { useHistory } from "react-router-dom"
+import { useHistory, useParams } from "react-router-dom"
 import { useForm, Controller } from "react-hook-form";
 import { CategoryContext } from "./CategoryProvider";
 import { DesignContext } from "./DesignProvider";
@@ -9,28 +9,55 @@ import "./DesignForm.css"
 
 export const DesignForm = () => {
     const { categories, getCategories } = useContext(CategoryContext)
-    const {addDesign} = useContext(DesignContext)
+    const {addDesign, getDesignById, updateDesign} = useContext(DesignContext)
     const history = useHistory()
+    
+    const params = useParams()
+    const editMode = params.hasOwnProperty("designId")
+
+    const [designObj, setDesignObj] = useState({
+                                                title: "",
+                                                link: "",
+                                                category_id: 0,
+                                                designImg: null,
+                                                public: false
+                                                        })
+
+        console.log(designObj)
 
     useEffect(() => {
-        getCategories()
+        if (editMode) {
+            const designId = parseInt(params.designId)
+            getCategories()
+            getDesignById(designId)
+            .then(setDesignObj)
+        } else {
+            getCategories()
+        }
     },[])
 
     const { register, handleSubmit, control } = useForm();
     const onSubmit = data => {
         const completeObj = addImageToData(data, designImg)
         console.log(completeObj)
-        addDesign(completeObj)
-        .then(() => {
-            history.push('/homepage')
+        if (editMode) {
+            completeObj.id = parseInt(params.designId)
+            updateDesign(completeObj)
+            .then(() => {
+                history.push('/homepage')
         })
+        } else {
+            addDesign(completeObj)
+            .then(() => {
+                history.push('/homepage')
+        })
+        }
     } 
 
     const addImageToData = (dataObj, stateVar) => {
         dataObj.designImg = stateVar
         return dataObj
     }
-
 
     const [designImg, setDesignImg] = useState('')
 
@@ -49,42 +76,80 @@ export const DesignForm = () => {
 
     return (
         <>
-            <h1>Add a New Design!</h1>
+            {editMode ? <h1>Edit Design</h1> : <h1>Add a New Design!</h1>}
             <form onSubmit={handleSubmit(onSubmit)}>
-                <label>Design Name:</label>
-                <input className="designInput" name="title" ref={register} placeholder="name" />
-                <label>Design Link:</label>
-                <input className="designInput" name="link" ref={register} placeholder="link" />
-                <label>Design Progress:</label>
-                <select name="categoryId" ref={register} className="designInput">
-                    <option value="0">Select a Category</option>
-                    {
-                        categories.map(c => <option value={c.id}>{c.label}</option>)
-                    }
+                    <Controller name="title" 
+                                control={control} 
+                                defaultValue={designObj.title} 
+                                render={props =>
+                                    <>
+                                    <label className="publicLabel">Design Name</label>
+                                    <input
+                                        className="register-input"
+                                        defaultValue={designObj.title}
+                                        type="text"
+                                        onChange={e => {
+                                            props.onChange(e.target.value)}}
+                                    />
+                                    </> 
+                                }/>
+                    <Controller name="link" 
+                                control={control} 
+                                defaultValue={designObj.link} 
+                                render={props =>
+                                    <>
+                                    <label className="publicLabel">Design Link</label>
+                                    <input
+                                        className="register-input"
+                                        defaultValue={designObj.link} 
+                                        type="text"
+                                        onChange={e => {
+                                            props.onChange(e.target.value)}}
+                                    />
+                                    </> 
+                                }/>
 
-                </select>
+                    <Controller name="categoryId" 
+                                control={control} 
+                                defaultValue={designObj.category_id} 
+                                render={props =>
+                                    <>
+                                    <label>Design Progress:</label>
+                                    <select name="category_id" onChange={e => {
+                                            props.onChange(e.target.value)}} 
+                                            className="designInput"
+                                            defaultValue={designObj.category_id} >
+                                        <option value="0">Select a Category</option>
+                                        {
+                                            categories.map(c => <option value={c.id}>{c.label}</option>)
+                                        }
+
+                                    </select>
+                                    </> 
+                                }/>
                 <Controller
                     name="designImg"
                     control={control}
-                    // defaultValue={designImg}
+                    defaultValue={designObj.designImg}
                     rules={{ required: false }}
                     render={props =>
                         <>
                         <label>Image:</label>
                         <input
+                        defaultValue={designObj.designImg}
                         className="designInput chooseFile"
                             type="file"
                             // id="designImage"
                             onChange={e => createProfileImageJSON(e)}
                         />
                         </>
-                    } // props contains: onChange, onBlur and value
+                    }
                 />
                 <Controller
                     className="designInput"
                     name="public"
                     control={control}
-                    defaultValue={false}
+                    defaultValue={designObj.public}
                     rules={{ required: false }}
                     render={props =>
                         <>
@@ -92,17 +157,19 @@ export const DesignForm = () => {
                       
                         <label className="publicLabel">Make Design Public</label>
                         <input
+                            defaultValue={designObj.public}
                             className="register-input"
                             type="checkbox"
                             checked= {props.value}
                             onChange={e => {
-                                console.log(e.target.checked)
                                 props.onChange(e.target.checked)}}
                         />
                         </div>
                         </>
-                    } // props contains: onChange, onBlur and value
+                    }
                 />
+
+
 
                 <input className="submitButton" type="submit" />
             </form>

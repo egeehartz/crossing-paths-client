@@ -26,6 +26,9 @@ export const AppViews = props => (
                     <Route path="/add"
                         render={props => <DesignForm {...props} />} 
                     />
+                    <Route path="/edit/:designId(\d+)"
+                        render={props => <DesignForm {...props} />} 
+                    />
                     <Route path="/explore"
                         render={props => <ExploreList {...props} />} 
                     />
