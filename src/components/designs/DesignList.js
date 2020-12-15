@@ -1,21 +1,17 @@
 import React, {useState, useContext, useRef} from "react"
 import { useLocation } from "react-router-dom"
 import { Modal, ModalBody, ModalHeader, Button } from "reactstrap"
-import ContentEditable from 'react-contenteditable'
 import { FollowingsContext } from "../users/FriendProvider"
 import "./DesignList.css"
-import { DesignContext } from "./DesignProvider"
 
 
 
 
-export const DesignList = ({design , func}) => {
+export const DesignList = ({design, category, func}) => {
 
-    const {changeDesignTitle} = useContext(DesignContext)
     const {createFollowing} = useContext(FollowingsContext)
     const location = useLocation()
 
-    const titleRef = useRef(null)
 
     const splitLocation = location.pathname.split("/")
 
@@ -27,14 +23,6 @@ export const DesignList = ({design , func}) => {
         .then(toggle)
     }
 
-    const handleSubmit = (e) => {
-        changeDesignTitle({
-                    id: design.id,
-                    title: titleRef.current.textContent             
-                })
-        .then(() => {
-            func()})
-    }
 
     return (
         <>
@@ -45,13 +33,8 @@ export const DesignList = ({design , func}) => {
                         <img className="image" src={design.design_img} alt="cross stitch pattern" />
                     </div>
 
-
                     <div className="flip-card-back">
-                        {location.pathname === "/homepage" ?
-                        <ContentEditable innerRef={titleRef} onChange={(e) => handleSubmit(e)} id={design.id} html={design.title}/> : 
-                        // <h4>{design.title}</h4> :
                         <h4>{design.title}</h4>
-                        }
 
                         {/* posted by logic */}
                         {location.pathname === "/explore" ?
@@ -82,6 +65,15 @@ export const DesignList = ({design , func}) => {
                         {/* add to board logic */}
                         {location.pathname === "/explore" ?
                             <Button>+</Button>
+                            : ""}
+
+
+                        {/* edit/delete logic */}
+                        {location.pathname === "/homepage" ?
+                        <>
+                            <Button>X</Button>
+                            <Button>EDIT</Button>
+                        </>
                             : ""}
 
 

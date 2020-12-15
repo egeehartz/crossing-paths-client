@@ -31,7 +31,7 @@ export const Homepage = () => {
                 getDesignByUser(user.id)
                     .then(setUserDesigns)
             })
-    }, [all, changeHeard])
+    }, [changeHeard])
 
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
@@ -44,7 +44,14 @@ export const Homepage = () => {
             setAll(false)
             getDesignsByUserAndCategory(userId, categorySelected)
                 .then(setUserDesigns)
-        } 
+        } else {
+            getCurrentUser()
+            .then((user) => {
+                setUser(user)
+                getDesignByUser(user.id)
+                    .then(setUserDesigns)
+            })
+        }
     }, [categorySelected])
 
 
@@ -87,7 +94,7 @@ export const Homepage = () => {
             <div>
                 {
                     userDesigns.map(d => {
-                        return <DesignList key={d.id} design={d} func={toggleChange}/>
+                        return <DesignList key={d.id} design={d} categeory={categorySelected} func={toggleChange}/>
                     })
                 }
             </div>

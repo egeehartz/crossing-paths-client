@@ -1,0 +1,28 @@
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.designInput {
+    margin-bottom: 3rem;
+    width: fit-content;
+}
+
+.checkbox-public {
+    display: flex;
+}
+
+.register-input {
+    margin-top: 0.25rem;
+    margin-left: 1rem;
+}
+.submitButton {
+    margin-top: 3rem;
+    width: fit-content;
+}
+
+.chooseFile {
+    margin-left: 7rem;
+}
+
