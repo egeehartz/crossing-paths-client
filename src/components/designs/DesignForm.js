@@ -19,11 +19,11 @@ export const DesignForm = () => {
                                                 title: "",
                                                 link: "",
                                                 category_id: 0,
-                                                designImg: null,
+                                                design_img: null,
                                                 public: false
                                                         })
 
-        console.log(designObj)
+console.log(designObj)
 
     useEffect(() => {
         if (editMode) {
@@ -36,17 +36,44 @@ export const DesignForm = () => {
         }
     },[])
 
+    /*
+    const handleControlledInputChange = (browserEvent) => {
+        const newEvent = Object.assign({}, event)          
+        newEvent[browserEvent.target.name] = browserEvent.target.value  
+        setEvent(newEvent)                         
+            
+    }
+    */
+
     const { register, handleSubmit, control } = useForm();
+
+    const refactorOnChange = (e) => {
+        const newDesign = Object.assign({}, designObj)          
+        console.log(e.target.name)
+        newDesign[e.target.name] = e.target.value  
+        setDesignObj(newDesign) 
+        console.log(designObj, "???")
+    }
     const onSubmit = data => {
-        const completeObj = addImageToData(data, designImg)
-        console.log(completeObj)
+        console.log(designImg, "img")
+        console.log(designObj, "onSubmit")
+
+        
         if (editMode) {
-            completeObj.id = parseInt(params.designId)
-            updateDesign(completeObj)
-            .then(() => {
-                history.push('/homepage')
-        })
+            if(designImg !== '') {
+                const completeObj = addImageToData(designObj, designImg)
+                updateDesign(completeObj)
+                .then(() => {
+                    history.push('/homepage')
+                })
+            } else {
+                updateDesign(designObj)
+                .then(() => {
+                    history.push('/homepage')
+                })
+            }
         } else {
+            const completeObj = addImageToData(data, designImg)
             addDesign(completeObj)
             .then(() => {
                 history.push('/homepage')
@@ -55,7 +82,7 @@ export const DesignForm = () => {
     } 
 
     const addImageToData = (dataObj, stateVar) => {
-        dataObj.designImg = stateVar
+        dataObj.design_img = stateVar
         return dataObj
     }
 
@@ -88,8 +115,9 @@ export const DesignForm = () => {
                                         className="register-input"
                                         defaultValue={designObj.title}
                                         type="text"
+                                        name="title"
                                         onChange={e => {
-                                            props.onChange(e.target.value)}}
+                                            refactorOnChange(e)}}
                                     />
                                     </> 
                                 }/>
@@ -101,10 +129,11 @@ export const DesignForm = () => {
                                     <label className="publicLabel">Design Link</label>
                                     <input
                                         className="register-input"
+                                        name="link" 
                                         defaultValue={designObj.link} 
                                         type="text"
                                         onChange={e => {
-                                            props.onChange(e.target.value)}}
+                                            refactorOnChange(e)}}
                                     />
                                     </> 
                                 }/>
@@ -116,7 +145,7 @@ export const DesignForm = () => {
                                     <>
                                     <label>Design Progress:</label>
                                     <select name="category_id" onChange={e => {
-                                            props.onChange(e.target.value)}} 
+                                            refactorOnChange(e)}} 
                                             className="designInput"
                                             defaultValue={designObj.category_id} >
                                         <option value="0">Select a Category</option>
@@ -128,17 +157,24 @@ export const DesignForm = () => {
                                     </> 
                                 }/>
                 <Controller
-                    name="designImg"
+                    name="design_img"
                     control={control}
-                    defaultValue={designObj.designImg}
+                    defaultValue={designObj.design_img}
                     rules={{ required: false }}
                     render={props =>
                         <>
-                        <label>Image:</label>
+                        {editMode ? 
+                        <>
+                        <label>Image Chosen:</label>
+                        <img src={designObj.design_img} width="150px" /> 
+                        <label>Change Image:</label>
+                        </>
+                        : <label>Image:</label>}
                         <input
-                        defaultValue={designObj.designImg}
+                        defaultValue={designObj.design_img}
                         className="designInput chooseFile"
                             type="file"
+                            name="design_img"
                             // id="designImage"
                             onChange={e => createProfileImageJSON(e)}
                         />
@@ -162,7 +198,7 @@ export const DesignForm = () => {
                             type="checkbox"
                             checked= {props.value}
                             onChange={e => {
-                                props.onChange(e.target.checked)}}
+                                refactorOnChange(e)}}
                         />
                         </div>
                         </>
