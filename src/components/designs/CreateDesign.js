@@ -1,9 +1,15 @@
-import React, { useEffect, useRef } from "react"
+import React, { useContext, useEffect, useRef, useState } from "react"
 import { Line, Layer, Rect } from "konva";
 import { Stage } from 'react-konva';
 import "./CreateDesign.css"
+import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
+import { CategoryContext } from "./CategoryProvider";
+import { Button } from "reactstrap";
+import { DesignContext } from "./DesignProvider";
 
 export const CreateDesign = () => {
+    const {getCategories, categories} = useContext(CategoryContext)
+    const {addDesign} = useContext(DesignContext)
 
     const stageRef = useRef(null)
     const titleRef = useRef(null)
@@ -12,7 +18,11 @@ export const CreateDesign = () => {
     const gridLayer = new Layer({id:"grid"})
 
     //create a new layer to hold shapes
-    const shapeLayer = new Layer({id:"shapes"})
+    // const shapeLayer = new Layer({id:"shapes"})
+
+    useEffect(() => {
+      getCategories()
+    },[])
 
     useEffect(() => {
       //creates the grid
@@ -120,30 +130,62 @@ export const CreateDesign = () => {
         })
 
         //add the rectangle to the layer then draw
-        shapeLayer.add(rectangle)
-        shapeLayer.draw()
+        gridLayer.add(rectangle)
+        gridLayer.draw()
 
         //add the layer to the stage
-        stageRef.current.add(shapeLayer)
+        stageRef.current.add(gridLayer)
     }
 
+
+    const [modal, setModal] = useState(false);
+    const toggle = () => setModal(!modal);
+
+
     const constructPattern = () => {
-      if(titleRef.current.value === "") {
-        window.alert("give your design a title!")
-      } else {
-        // var image_data = stageRef.current.toDataURL();
-        // addPattern({
-        //   title: titleRef.current.value,
-        //   image: image_data
-        // })
-      }
+        console.log("hear hear")
+        const canvas = stageRef.current.toCanvas()
+        console.log(canvas)
+        const img = canvas.toDataURL()
+        console.log(img)
+
+        addDesign({
+            title: "Test",
+            link: "empty",
+            design_img: img,
+            category_id: 1,
+            public: true
+        })
+
  
     }
 
+
     return (
       <>
-        <input type="text" placeholder="name your design!" ref={titleRef}></input>
-        <button onClick={constructPattern} >save pattern</button>
+        <button onClick={toggle} >save pattern</button>
+        <Modal isOpen={modal} toggle={toggle}>
+          <ModalHeader>Save Your Creation!</ModalHeader>
+          <ModalBody>
+            <input type="text" name="title" placeholder="design name"/>
+            <select name="category_id" >
+                <option value="0">Select a Category</option>
+                {
+                    categories.map(c => <option value={c.id}>{c.label}</option>)
+                }
+
+            </select>
+            <label className="publicLabel">Make Design Public</label>
+                        <input
+                            type="checkbox"
+                            name="public"
+                        />
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={toggle}>Keep Working</Button>
+            <Button onClick={constructPattern}>Save</Button>
+          </ModalFooter>
+        </Modal>
         <Stage 
           className="stage"
           width={896}
