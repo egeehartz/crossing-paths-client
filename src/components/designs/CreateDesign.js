@@ -144,6 +144,7 @@ export const CreateDesign = () => {
 
     const constructPattern = () => {
         const canvas = stageRef.current.toCanvas()
+        console.log(canvas, "1")
         const img = canvas.toDataURL()
 
         addDesign({
@@ -185,6 +186,7 @@ export const CreateDesign = () => {
         </Modal>
         <Stage 
           className="stage"
+          opacity={0.9}
           width={896}
           height={896}
           x={0}
