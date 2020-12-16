@@ -12,14 +12,16 @@ export const CreateDesign = () => {
     const gridLayer = new Layer({id:"grid"})
 
     //create a new layer to hold shapes
-    const shapeLayer = new Layer({id:"shapes"})
+    const shapeLayer = new Layer({width: 840, height: 740})
 
     useEffect(() => {
       //creates the grid
         const blockSnapSize = 30;
         const padding = blockSnapSize;
-        const width = window.innerWidth;
-        const height = window.innerHeight;
+        const width = 840
+        const height = 780
+        // const width = window.innerWidth;
+        // const height = window.innerHeight;
     
         gridLayer.add(new Line({
             points: [900, 0, 900, 900], 
@@ -92,8 +94,8 @@ export const CreateDesign = () => {
         //create a rectangle 
         const rectangle = new Rect({
             //if an x, y property gets defined, subtract that from the coordinate
-            x: (newX[0] - 60),
-            y: (newY[0] - 60),
+            x: (newX[0]),
+            y: (newY[0]),
             height: blockSnapSize,
             width: blockSnapSize,
             fill: 'red',
@@ -128,12 +130,12 @@ export const CreateDesign = () => {
         <button onClick={constructPattern} >save pattern</button>
         <Stage 
           className="stage"
-          width={900}
-          height={900}
-          x={60}
-          y={60}
+          width={810}
+          height={780}
+          x={0}
+          y={0}
           onClick={() => drawRectangle()} ref={stageRef}
-          style={{cursor:"crosshair"}}>
+          style={{cursor:"crosshair", margin: "3rem"}}>
         </Stage>
         </>
     );
