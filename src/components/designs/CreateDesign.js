@@ -143,11 +143,8 @@ export const CreateDesign = () => {
 
 
     const constructPattern = () => {
-        console.log("hear hear")
         const canvas = stageRef.current.toCanvas()
-        console.log(canvas)
         const img = canvas.toDataURL()
-        console.log(img)
 
         addDesign({
             title: "Test",
