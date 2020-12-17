@@ -16,7 +16,6 @@ export const Homepage = () => {
 
     const [userDesigns, setUserDesigns] = useState([])
     const [user, setUser] = useState([])
-    const [all, setAll] = useState(true)
     const [categorySelected, setCategorySelected] = useState(0)
 
 
@@ -41,7 +40,6 @@ export const Homepage = () => {
         //if categorySelected is empty, don't do anything (avoids error in the network tab)
         if(categorySelected !== 0){
             const userId = user.id
-            setAll(false)
             getDesignsByUserAndCategory(userId, categorySelected)
                 .then(setUserDesigns)
         } else {
@@ -56,10 +54,9 @@ export const Homepage = () => {
 
 
     //resets the state variables tracking the radio buttons
-    const clearFilterButton = () => {
-        setCategorySelected(0)
-        setAll(true)
-    }
+    // const clearFilterButton = () => {
+    //     setCategorySelected(0)
+    // }
 
 
     return (
@@ -85,9 +82,16 @@ export const Homepage = () => {
 
                 }
                 <div>
-                    <button onClick={clearFilterButton}>
+                    {/* <button onClick={clearFilterButton}>
                     All
-                    </button>
+                    </button> */}
+                    <input
+                                type="radio"
+                                value={0}
+                                name="categories"
+                                onChange={() => { setCategorySelected(0) }}
+                            />{" "}
+                            {"all"}
                 </div>
             </div>
             <br />

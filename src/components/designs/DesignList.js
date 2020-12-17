@@ -92,10 +92,12 @@ export const DesignList = ({ design, category, func }) => {
 
 
                         {/* design link rendering depending on /explore */}
-                        {design.link !== "" ?
-                            <a className="design_link"
-                                href={design.link} target="_blank">source</a> :
-                            ""}
+                        {design.link === "" || design.link === "empty" ?
+                                ""
+                                :
+                                <a className="design_link"
+                                    href={design.link} target="_blank">source</a> 
+                            }
 
 
                         {/* edit/delete logic */}
