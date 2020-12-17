@@ -6,10 +6,14 @@ import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import { CategoryContext } from "./CategoryProvider";
 import { Button } from "reactstrap";
 import { DesignContext } from "./DesignProvider";
+import { useHistory } from "react-router-dom";
 
 export const CreateDesign = () => {
     const {getCategories, categories} = useContext(CategoryContext)
     const {addDesign} = useContext(DesignContext)
+    const history = useHistory()
+
+    const [designObj, setDesignObj] = useState({  })
 
     const stageRef = useRef(null)
     const titleRef = useRef(null)
@@ -36,14 +40,14 @@ export const CreateDesign = () => {
         gridLayer.add(new Line({
             points: [896, 0, 896, 896], 
             stroke: '#222',
-            strokeWidth: 1
+            strokeWidth: 2
           }));
 
           //last horizontal line
           gridLayer.add(new Line({
             points: [0, 896, 896, 896], 
             stroke: '#222',
-            strokeWidth: 1
+            strokeWidth: 2
           }));
 
 
@@ -141,6 +145,16 @@ export const CreateDesign = () => {
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
 
+    const onChange = (e) => {
+      const newDesign = Object.assign({}, designObj)
+      if (e.target.name === "public") {
+          newDesign[e.target.name] = e.target.checked
+      } else {
+          newDesign[e.target.name] = e.target.value
+      }
+      setDesignObj(newDesign)
+  }
+
 
     const constructPattern = () => {
         const canvas = stageRef.current.toCanvas()
@@ -148,13 +162,16 @@ export const CreateDesign = () => {
         const img = canvas.toDataURL()
 
         addDesign({
-            title: "Test",
-            link: "empty",
+            title: designObj.title,
+            link: "",
             design_img: img,
-            category_id: 1,
-            public: true
+            category_id: designObj.category_id,
+            public: designObj.public
         })
-
+        .then(() => {
+          toggle()
+          history.push('/homepage')
+        })
  
     }
 
@@ -165,8 +182,8 @@ export const CreateDesign = () => {
         <Modal isOpen={modal} toggle={toggle}>
           <ModalHeader>Save Your Creation!</ModalHeader>
           <ModalBody>
-            <input type="text" name="title" placeholder="design name"/>
-            <select name="category_id" >
+            <input type="text" name="title" placeholder="design name" onChange={onChange}/>
+            <select name="category_id" onChange={onChange}>
                 <option value="0">Select a Category</option>
                 {
                     categories.map(c => <option value={c.id}>{c.label}</option>)
@@ -175,6 +192,7 @@ export const CreateDesign = () => {
             </select>
             <label className="publicLabel">Make Design Public</label>
                         <input
+                        onChange={onChange}
                             type="checkbox"
                             name="public"
                         />

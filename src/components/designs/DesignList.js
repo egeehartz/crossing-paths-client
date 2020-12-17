@@ -18,7 +18,6 @@ export const DesignList = ({ design, category, func }) => {
     const history = useHistory()
     const [designObj, setDesignObj] = useState({ design })
 
-    const splitLocation = location.pathname.split("/")
 
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
@@ -47,13 +46,6 @@ export const DesignList = ({ design, category, func }) => {
     }
 
     const addToBoard = () => {
-        console.log({
-            "link": designObj.link,
-            "title": designObj.title,
-            "design_img": designObj.design_img,
-            "public": designObj.public,
-            "category_id": designObj.category_id
-        })
         addDesign({
             "link": designObj.link,
             "title": designObj.title,
@@ -103,10 +95,7 @@ export const DesignList = ({ design, category, func }) => {
                         {design.link !== "" ?
                             <a className="design_link"
                                 href={design.link} target="_blank">source</a> :
-                            (location.pathname === "/explore" || splitLocation[1] === "profile") && design.link === "" ?
-                                "" :
-                                location.pathname !== "/explore" && design.link === "" ?
-                                    <p>add link</p> : ""}
+                            ""}
 
 
                         {/* edit/delete logic */}

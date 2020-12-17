@@ -7,7 +7,7 @@ export const Dashboard = () => {
 
     return (
         <>
-            <h1>Testing</h1>
+            <h1>Dashboard</h1>
             <div className="activityButtons">
                 <Link to="/homepage">
                     <Button>Home</Button>
