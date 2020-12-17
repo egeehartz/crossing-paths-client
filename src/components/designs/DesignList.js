@@ -1,30 +1,68 @@
-import React, {useState, useContext} from "react"
+import React, { useState, useContext, useEffect } from "react"
 import { useLocation, useHistory } from "react-router-dom"
-import { Modal, ModalBody, ModalHeader, Button } from "reactstrap"
+import { Modal, ModalBody, ModalHeader, Button, ModalFooter } from "reactstrap"
 import { FollowingsContext } from "../users/FriendProvider"
+import { CategoryContext } from "./CategoryProvider"
 import "./DesignList.css"
 import { DesignContext } from "./DesignProvider"
 
+// * THIS MODULE REPRESENTS A SINGLE DESIGN CARD
 
 
+export const DesignList = ({ design, category, func }) => {
+    const { deleteDesign, addDesign } = useContext(DesignContext)
+    const { createFollowing } = useContext(FollowingsContext)
+    const {categories, getCategories} = useContext(CategoryContext)
 
-export const DesignList = ({design, category, func}) => {
-    const {deleteDesign} = useContext(DesignContext)
-    const {createFollowing} = useContext(FollowingsContext)
     const location = useLocation()
     const history = useHistory()
-
+    const [designObj, setDesignObj] = useState({ design })
 
     const splitLocation = location.pathname.split("/")
 
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
+    const [addModal, setAddModal] = useState(false);
+    const toggleAddModal = () => setAddModal(!addModal);
+
+    useEffect(() => {
+        setDesignObj(design)
+        getCategories()
+    },[])
+
 
     const constructFollow = () => {
-        createFollowing({friendId: design.user.id})
-        .then(toggle)
+        createFollowing({ friendId: design.user.id })
+            .then(toggle)
     }
 
+    const onChange = (e) => {
+        const newDesign = Object.assign({}, design)
+        if (e.target.name === "public") {
+            newDesign[e.target.name] = e.target.checked
+        } else {
+            newDesign[e.target.name] = e.target.value
+        }
+        setDesignObj(newDesign)
+    }
+
+    const addToBoard = () => {
+        console.log({
+            "link": designObj.link,
+            "title": designObj.title,
+            "design_img": designObj.design_img,
+            "public": designObj.public,
+            "category_id": designObj.category_id
+        })
+        addDesign({
+            "link": designObj.link,
+            "title": designObj.title,
+            "design_img": designObj.design_img,
+            "public": designObj.public,
+            "category_id": designObj.category_id
+        })
+        .then(toggleAddModal)
+    }
 
     return (
         <>
@@ -37,6 +75,7 @@ export const DesignList = ({design, category, func}) => {
 
                     <div className="flip-card-back">
                         <h4>{design.title}</h4>
+                        
 
                         {/* posted by logic */}
                         {location.pathname === "/explore" ?
@@ -46,6 +85,13 @@ export const DesignList = ({design, category, func}) => {
                                     {design.user.full_name}
                                 </button>
                             </p>
+                            : ""}
+                        
+                        {/* add to board logic */}
+                        {location.pathname === "/explore" ?
+                            <div>
+                                <Button onClick={toggleAddModal}>+</Button>
+                            </div>
                             : ""}
 
 
@@ -63,25 +109,18 @@ export const DesignList = ({design, category, func}) => {
                                     <p>add link</p> : ""}
 
 
-
-                        {/* add to board logic */}
-                        {location.pathname === "/explore" ?
-                            <Button>+</Button>
-                            : ""}
-
-
                         {/* edit/delete logic */}
                         {location.pathname === "/homepage" ?
-                        <>
-                            <Button onClick={() => {
-                                deleteDesign(design.id)
-                                .then(func)
-                            }}>X</Button>
-                            <Button 
-                                onClick={() =>{
-                                    history.push(`/edit/${design.id}`)
-                                }}>EDIT</Button>
-                        </>
+                            <>
+                                <Button onClick={() => {
+                                    deleteDesign(design.id)
+                                        .then(func)
+                                }}>X</Button>
+                                <Button
+                                    onClick={() => {
+                                        history.push(`/edit/${design.id}`)
+                                    }}>EDIT</Button>
+                            </>
                             : ""}
 
 
@@ -89,9 +128,34 @@ export const DesignList = ({design, category, func}) => {
                         <Modal isOpen={modal} toggle={toggle} >
                             <ModalHeader toggle={toggle}>Follow {design.user.username}</ModalHeader>
                             <ModalBody>
-                                    <Button color="primary" onClick={constructFollow}>Follow!</Button>{' '}
-                                    <Button color="secondary" onClick={toggle}>nevermind</Button>
+                                <Button color="primary" onClick={constructFollow}>Follow!</Button>{' '}
+                                <Button color="secondary" onClick={toggle}>nevermind</Button>
                             </ModalBody>
+                        </Modal>
+
+                        {/* Modal to Add Design to Board */}
+                        <Modal isOpen={addModal} toggle={toggleAddModal}>
+                            <ModalHeader>Save To Your Board!</ModalHeader>
+                            <ModalBody>
+                                <input type="text" name="title" onChange={onChange} placeholder={design.title}></input>
+                                <select name="category_id" onChange={onChange} >
+                                    <option value="0">Select a Category</option>
+                                    {
+                                        categories.map(c => <option value={c.id}>{c.label}</option>)
+                                    }
+
+                                </select>
+                                <label className="publicLabel">Make Design Public</label>
+                                <input
+                                onChange={onChange}
+                                    type="checkbox"
+                                    name="public"
+                                />
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button onClick={toggleAddModal}>nevermind</Button>
+                                <Button onClick={addToBoard}>Save</Button>
+                            </ModalFooter>
                         </Modal>
 
                     </div>
