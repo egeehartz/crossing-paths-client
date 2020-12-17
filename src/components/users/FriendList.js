@@ -18,6 +18,8 @@ export const FriendList = () => {
 
     const [friendsManage, setManage] = useState(true);
     const toggle = () => {friendsManage ? setManage(false) : setManage(true)}
+    const [followAction, setFollowAction] = useState(true);
+    const toggleFollow = () => {followAction ? setFollowAction(false) : setFollowAction(true)}
 
     const handleChange = event => {
         const userInput = event.target.value.toLowerCase()
@@ -45,7 +47,7 @@ export const FriendList = () => {
             .then(() => {
                 getUsersToFollow().then(setPotentialFriends)
             })
-    }, [])
+    }, [followAction])
 
 
     return (
@@ -57,7 +59,6 @@ export const FriendList = () => {
             <div>
                 {
                     friends.map(f => {
-                        console.log(f)
                         return <div>
                             {f.friend.profile_img === null || f.friend.profile_img === undefined
                                 ? <img src={defaultImg} width='50px' alt="profile" />
@@ -68,7 +69,11 @@ export const FriendList = () => {
                             </Link>
                             {friendsManage ?
                              "" : 
-                             <button onClick={() => console.log(f.id)}>unfollow</button>
+                             <button onClick={() => {
+                                 deleteFollowing(f.id)
+                                    .then(toggleFollow)
+                             }
+                            }>unfollow</button>
                             }
                         </div>
                     })
@@ -91,6 +96,7 @@ export const FriendList = () => {
                                                 getFriendsByFollower(user.id)
                                                     .then(setFriends)
                                                     .then(setSearchTerm(""))
+                                                    .then(toggleFollow)
                                             }))
                                 }}>follow</button> </>
                         }) : ""
