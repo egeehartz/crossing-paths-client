@@ -16,6 +16,9 @@ export const FriendList = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([]);
 
+    const [friendsManage, setManage] = useState(true);
+    const toggle = () => {friendsManage ? setManage(false) : setManage(true)}
+
     const handleChange = event => {
         const userInput = event.target.value.toLowerCase()
         setSearchTerm(userInput);
@@ -48,6 +51,9 @@ export const FriendList = () => {
     return (
         <>
             <h1>Friends</h1>
+            <button onClick={toggle}>
+                {friendsManage ? 'manage' : 'nevermind'}
+            </button>
             <div>
                 {
                     friends.map(f => {
@@ -59,6 +65,7 @@ export const FriendList = () => {
                             <Link to={{ pathname: `/profile/${f.friend.id}`, state: { friendObj: f } }}>
                                 {f.friend.full_name}
                             </Link>
+                            <button onCLick={}>unfollow</button>
                         </div>
                     })
                 }
