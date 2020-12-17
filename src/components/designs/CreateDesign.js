@@ -7,6 +7,7 @@ import { CategoryContext } from "./CategoryProvider";
 import { Button } from "reactstrap";
 import { DesignContext } from "./DesignProvider";
 import { useHistory } from "react-router-dom";
+import { TwitterPicker } from 'react-color';
 
 export const CreateDesign = () => {
     const {getCategories, categories} = useContext(CategoryContext)
@@ -14,16 +15,14 @@ export const CreateDesign = () => {
     const history = useHistory()
 
     const [designObj, setDesignObj] = useState({})
-    const [color, setColor] = useState({})
+    const [color, setColor] = useState("#000000")
 
     const stageRef = useRef(null)
-    const titleRef = useRef(null)
 
     //create layer to make the grid
     const gridLayer = new Layer({id:"grid"})
 
-    //create a new layer to hold shapes
-    // const shapeLayer = new Layer({id:"shapes"})
+  
 
     useEffect(() => {
       getCategories()
@@ -91,7 +90,6 @@ export const CreateDesign = () => {
 
         //get the x, y positions of the click
         const coordinates = stageRef.current.getPointerPosition()
-        console.log(coordinates)
 
         let arr = []
         let arr2 = []
@@ -176,8 +174,8 @@ export const CreateDesign = () => {
  
     }
 
-    const userPickColor = (e) => {
-      setColor(e.target.value)
+    const userColor = (e) => {
+      setColor(e.hex)
     }
 
 
@@ -186,7 +184,7 @@ export const CreateDesign = () => {
         <button onClick={toggle} >save pattern</button>
         <div>
         <label>Change Square Color</label>
-        <input type="color" onChange={userPickColor}/>
+          <TwitterPicker onChange={userColor} />
         </div>
         <Modal isOpen={modal} toggle={toggle}>
           <ModalHeader>Save Your Creation!</ModalHeader>
