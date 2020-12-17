@@ -9,7 +9,7 @@ import defaultImg from "./images/default.png"
 
 export const FriendList = () => {
     const { getCurrentUser, getUsers, users, getUsersToFollow } = useContext(UserContext)
-    const { getFriendsByFollower, createFollowing } = useContext(FollowingsContext)
+    const { getFriendsByFollower, createFollowing, deleteFollowing } = useContext(FollowingsContext)
 
     const [friends, setFriends] = useState([])
     const [potentialFriends, setPotentialFriends] = useState([])
@@ -57,6 +57,7 @@ export const FriendList = () => {
             <div>
                 {
                     friends.map(f => {
+                        console.log(f)
                         return <div>
                             {f.friend.profile_img === null || f.friend.profile_img === undefined
                                 ? <img src={defaultImg} width='50px' alt="profile" />
@@ -65,7 +66,10 @@ export const FriendList = () => {
                             <Link to={{ pathname: `/profile/${f.friend.id}`, state: { friendObj: f } }}>
                                 {f.friend.full_name}
                             </Link>
-                            <button onCLick={}>unfollow</button>
+                            {friendsManage ?
+                             "" : 
+                             <button onClick={() => console.log(f.id)}>unfollow</button>
+                            }
                         </div>
                     })
                 }
