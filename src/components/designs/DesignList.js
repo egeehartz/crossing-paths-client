@@ -73,9 +73,13 @@ export const DesignList = ({ design, category, func }) => {
                         {location.pathname === "/explore" ?
                             <p>
                                 posted by
+                                {design.created_by_friend ? 
+                                   <p> {design.user.full_name} </p>
+                                    :
                                 <button onClick={toggle}>
                                     {design.user.full_name}
                                 </button>
+                                }
                             </p>
                             : ""}
                         
