@@ -13,7 +13,8 @@ export const CreateDesign = () => {
     const {addDesign} = useContext(DesignContext)
     const history = useHistory()
 
-    const [designObj, setDesignObj] = useState({  })
+    const [designObj, setDesignObj] = useState({})
+    const [color, setColor] = useState({})
 
     const stageRef = useRef(null)
     const titleRef = useRef(null)
@@ -127,7 +128,7 @@ export const CreateDesign = () => {
             y: (newY[0]),
             height: blockSnapSize,
             width: blockSnapSize,
-            fill: 'red',
+            fill: color,
             stroke: 'black',
             strokeWidth: 1,
             draggable: false
@@ -175,10 +176,18 @@ export const CreateDesign = () => {
  
     }
 
+    const userPickColor = (e) => {
+      setColor(e.target.value)
+    }
+
 
     return (
       <>
         <button onClick={toggle} >save pattern</button>
+        <div>
+        <label>Change Square Color</label>
+        <input type="color" onChange={userPickColor}/>
+        </div>
         <Modal isOpen={modal} toggle={toggle}>
           <ModalHeader>Save Your Creation!</ModalHeader>
           <ModalBody>
