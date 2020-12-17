@@ -9,12 +9,17 @@ import defaultImg from "./images/default.png"
 
 export const FriendList = () => {
     const { getCurrentUser, getUsers, users, getUsersToFollow } = useContext(UserContext)
-    const { getFriendsByFollower, createFollowing } = useContext(FollowingsContext)
+    const { getFriendsByFollower, createFollowing, deleteFollowing } = useContext(FollowingsContext)
 
     const [friends, setFriends] = useState([])
     const [potentialFriends, setPotentialFriends] = useState([])
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([]);
+
+    const [friendsManage, setManage] = useState(true);
+    const toggle = () => {friendsManage ? setManage(false) : setManage(true)}
+    const [followAction, setFollowAction] = useState(true);
+    const toggleFollow = () => {followAction ? setFollowAction(false) : setFollowAction(true)}
 
     const handleChange = event => {
         const userInput = event.target.value.toLowerCase()
@@ -42,12 +47,15 @@ export const FriendList = () => {
             .then(() => {
                 getUsersToFollow().then(setPotentialFriends)
             })
-    }, [])
+    }, [followAction])
 
 
     return (
         <>
             <h1>Friends</h1>
+            <button onClick={toggle}>
+                {friendsManage ? 'manage' : 'nevermind'}
+            </button>
             <div>
                 {
                     friends.map(f => {
@@ -59,6 +67,14 @@ export const FriendList = () => {
                             <Link to={{ pathname: `/profile/${f.friend.id}`, state: { friendObj: f } }}>
                                 {f.friend.full_name}
                             </Link>
+                            {friendsManage ?
+                             "" : 
+                             <button onClick={() => {
+                                 deleteFollowing(f.id)
+                                    .then(toggleFollow)
+                             }
+                            }>unfollow</button>
+                            }
                         </div>
                     })
                 }
@@ -80,6 +96,7 @@ export const FriendList = () => {
                                                 getFriendsByFollower(user.id)
                                                     .then(setFriends)
                                                     .then(setSearchTerm(""))
+                                                    .then(toggleFollow)
                                             }))
                                 }}>follow</button> </>
                         }) : ""
