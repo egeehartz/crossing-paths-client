@@ -53,10 +53,9 @@ export const Homepage = () => {
     }, [categorySelected])
 
 
-    //resets the state variables tracking the radio buttons
-    // const clearFilterButton = () => {
-    //     setCategorySelected(0)
-    // }
+    const addProfilePicture = () => {
+
+    }
 
 
     return (
@@ -112,6 +111,15 @@ export const Homepage = () => {
                     <Link to="/add">
                         <Button color="secondary" onClick={toggle}>Upload an Existing design</Button>
                     </Link>
+                </ModalBody>
+            </Modal>
+
+
+            {/* photo upload modal */}
+            <Modal isOpen={photoModal} toggle={togglePhotoModal} >
+                <ModalHeader toggle={togglePhotoModal}>Change Profile Picture</ModalHeader>
+                <ModalBody>
+                    <input type="file" name="profile_img" onChange={e => createProfileImageJSON(e)} />
                 </ModalBody>
             </Modal>
         </>
