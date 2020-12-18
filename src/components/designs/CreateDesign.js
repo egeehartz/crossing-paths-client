@@ -183,8 +183,16 @@ export const CreateDesign = () => {
       <>
         <button onClick={toggle} >save pattern</button>
         <div>
-        <label>Change Square Color</label>
+        <h4>Change Square Color</h4>
           <TwitterPicker onChange={userColor} />
+        </div>
+        <br />
+        <div>
+          <h4>DMC to HEX Converter</h4>
+          <input type="text" placeholder="enter floss color here"></input>
+          {/* onChange would search floss table to find the row that matches the floss number and return the hex number
+              kinda like how the friend search is set up
+          */}
         </div>
         <Modal isOpen={modal} toggle={toggle}>
           <ModalHeader>Save Your Creation!</ModalHeader>
