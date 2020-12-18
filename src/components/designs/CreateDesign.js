@@ -8,24 +8,40 @@ import { Button } from "reactstrap";
 import { DesignContext } from "./DesignProvider";
 import { useHistory } from "react-router-dom";
 import { TwitterPicker } from 'react-color';
+import { ColorContext } from "./ColorProvider";
 
 export const CreateDesign = () => {
     const {getCategories, categories} = useContext(CategoryContext)
+    const {colors, getColors} = useContext(ColorContext)
     const {addDesign} = useContext(DesignContext)
     const history = useHistory()
 
     const [designObj, setDesignObj] = useState({})
     const [color, setColor] = useState("#000000")
+    const [searchTerm, setSearchTerm] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
 
     const stageRef = useRef(null)
 
     //create layer to make the grid
     const gridLayer = new Layer({id:"grid"})
 
+    useEffect(() => {
+      if (searchTerm !== "") {
+          const results = colors.filter(c => c.floss_number.includes(searchTerm))
+          setSearchResults(results);
+      }
+  }, [searchTerm])
+
   
+  const handleChange = event => {
+    const userInput = event.target.value.toLowerCase()
+    setSearchTerm(userInput);
+};
 
     useEffect(() => {
       getCategories()
+      getColors()
     },[])
 
     useEffect(() => {
@@ -189,7 +205,11 @@ export const CreateDesign = () => {
         <br />
         <div>
           <h4>DMC to HEX Converter</h4>
-          <input type="text" placeholder="enter floss color here"></input>
+          <input type="text" placeholder="enter floss color here" value={searchTerm} onChange={handleChange} />
+          {searchTerm !== "" ?
+                        searchResults.map(result => {
+                            return <> <li>#{result.rgb_code}, {result.description}</li> </>})
+                             : ""}
           {/* onChange would search floss table to find the row that matches the floss number and return the hex number
               kinda like how the friend search is set up
           */}
