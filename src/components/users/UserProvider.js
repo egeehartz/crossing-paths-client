@@ -48,11 +48,24 @@ export const UserProvider = (props) => {
             .then(response => response.json())
     }
 
+    const changeProfilePicture = (picture, userId) => {
+      return fetch(`http://localhost:8000/users/${userId}/change_profile_picture`, {
+            method: "PATCH",
+            headers: {
+                Authorization: `Token ${localStorage.getItem("cp_user")}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(picture)
+        })
+
+    }
+    
+
     
     return (
         <UserContext.Provider value={{
             users, getUsers, setUsers, getUserById, getCurrentUser, 
-            setCurrentUser, currentUser, getUsersToFollow}}>
+            setCurrentUser, currentUser, getUsersToFollow, changeProfilePicture}}>
             {props.children}
         </UserContext.Provider>
     )
