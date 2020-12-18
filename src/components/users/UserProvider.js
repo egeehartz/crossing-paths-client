@@ -48,9 +48,9 @@ export const UserProvider = (props) => {
             .then(response => response.json())
     }
 
-    const changeProfilePicture = (picture) => {
-      return fetch(`http://localhost:8000/users/change_profile_picture`, {
-            method: "PUT",
+    const changeProfilePicture = (picture, userId) => {
+      return fetch(`http://localhost:8000/users/${userId}/change_profile_picture`, {
+            method: "PATCH",
             headers: {
                 Authorization: `Token ${localStorage.getItem("cp_user")}`,
                 "Content-Type": "application/json",
@@ -59,7 +59,7 @@ export const UserProvider = (props) => {
         })
             .then(response => response.json())
     }
-    }
+    
 
     
     return (

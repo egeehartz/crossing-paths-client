@@ -34,6 +34,11 @@ export const Homepage = () => {
 
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
+    const [photoModal, setPhotoModal] = useState(false);
+    const togglePhotoModal = () => {
+        setProfilePic('')
+        setPhotoModal(!photoModal);
+    }
 
 
     useEffect(() => {
@@ -54,7 +59,11 @@ export const Homepage = () => {
 
 
     const addProfilePicture = () => {
-        changeProfilePicture(profilePic)
+        const picture = {
+            profile_img: profilePic
+        }
+        changeProfilePicture(picture, user.id)
+        .then(setProfilePic(''))
     }
 
     const [profilePic, setProfilePic] = useState('')
@@ -71,13 +80,15 @@ export const Homepage = () => {
         });
     }
 
+    console.log(profilePic)
+
 
     return (
         <>
             <h1>Homepage</h1>
             {user.profile_img === null || user.profile_img === undefined
-                ? <img src={defaultImg} width='50px' alt="profile" />
-                : <img src={user.profile_img} width="50px" alt="profile" />}
+                ? <img src={defaultImg} width='50px' alt="profile" onClick={togglePhotoModal}/>
+                : <img src={user.profile_img} width="50px" alt="profile" onClick={togglePhotoModal} />}
             {/* <h4>{user.user.username}</h4> */}
             <div>
                 {
