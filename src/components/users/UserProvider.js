@@ -57,7 +57,7 @@ export const UserProvider = (props) => {
               },
               body: JSON.stringify(picture)
         })
-            .then(response => response.json())
+
     }
     
 
