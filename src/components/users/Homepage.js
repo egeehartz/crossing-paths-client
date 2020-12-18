@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import { Modal, ModalBody, ModalHeader, Button } from "reactstrap"
+import { Modal, ModalBody, ModalHeader, Button, ModalFooter } from "reactstrap"
 import { CategoryContext } from "../designs/CategoryProvider"
 import { DesignContext } from "../designs/DesignProvider"
 import { DesignList } from "../designs/DesignList"
@@ -12,7 +12,7 @@ import defaultImg from "./images/default.png"
 export const Homepage = () => {
     const { categories, getCategories } = useContext(CategoryContext)
     const { getDesignByUser, getDesignsByUserAndCategory } = useContext(DesignContext)
-    const { getCurrentUser } = useContext(UserContext)
+    const { getCurrentUser, changeProfilePicture } = useContext(UserContext)
 
     const [userDesigns, setUserDesigns] = useState([])
     const [user, setUser] = useState([])
@@ -34,6 +34,11 @@ export const Homepage = () => {
 
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
+    const [photoModal, setPhotoModal] = useState(false);
+    const togglePhotoModal = () => {
+        setProfilePic('')
+        setPhotoModal(!photoModal);
+    }
 
 
     useEffect(() => {
@@ -53,18 +58,38 @@ export const Homepage = () => {
     }, [categorySelected])
 
 
-    //resets the state variables tracking the radio buttons
-    // const clearFilterButton = () => {
-    //     setCategorySelected(0)
-    // }
+    const addProfilePicture = () => {
+        const picture = {
+            profile_img: profilePic
+        }
+        console.log(picture)
+        changeProfilePicture(picture, user.id)
+        .then(setProfilePic(''))
+    }
+
+    const [profilePic, setProfilePic] = useState('')
+    console.log(profilePic)
+
+    const getBase64 = (file, callback) => {
+        const reader = new FileReader();
+        reader.addEventListener('load', () => callback(reader.result));
+        reader.readAsDataURL(file);
+    }
+
+    const createProfileImageJSON = (event) => {
+        getBase64(event.target.files[0], (base64ImageString) => {
+            setProfilePic(base64ImageString)
+        });
+    }
+
 
 
     return (
         <>
             <h1>Homepage</h1>
             {user.profile_img === null || user.profile_img === undefined
-                ? <img src={defaultImg} width='50px' alt="profile" />
-                : <img src={user.profile_img} width="50px" alt="profile" />}
+                ? <img src={defaultImg} width='50px' alt="profile" onClick={togglePhotoModal}/>
+                : <img src={user.profile_img} width="50px" alt="profile" onClick={togglePhotoModal} />}
             {/* <h4>{user.user.username}</h4> */}
             <div>
                 {
@@ -98,7 +123,7 @@ export const Homepage = () => {
             <div>
                 {
                     userDesigns.map(d => {
-                        return <DesignList key={d.id} design={d} categeory={categorySelected} func={toggleChange}/>
+                        return <DesignList key={d.id} design={d} categories={categories} func={toggleChange}/>
                     })
                 }
             </div>
@@ -113,6 +138,26 @@ export const Homepage = () => {
                         <Button color="secondary" onClick={toggle}>Upload an Existing design</Button>
                     </Link>
                 </ModalBody>
+            </Modal>
+
+
+            {/* photo upload modal */}
+            <Modal isOpen={photoModal} toggle={togglePhotoModal} >
+                <ModalHeader toggle={togglePhotoModal}>Change Profile Picture</ModalHeader>
+                <ModalBody>
+                    <div>
+                        <p>current picture</p>
+                        <img src={user.profile_img} width="75px" />
+                    </div>
+                    <div>
+                        <p>new</p>
+                        {profilePic !== "" ? <img src={profilePic} width="75px" /> : ""}
+                    </div>
+                    <input type="file" name="profile_img" onChange={e => createProfileImageJSON(e)} />
+                </ModalBody>
+                <ModalFooter>
+                    <Button onClick={addProfilePicture}>Save</Button>
+                </ModalFooter>
             </Modal>
         </>
     )
