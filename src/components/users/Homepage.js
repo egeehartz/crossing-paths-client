@@ -62,11 +62,13 @@ export const Homepage = () => {
         const picture = {
             profile_img: profilePic
         }
+        console.log(picture)
         changeProfilePicture(picture, user.id)
         .then(setProfilePic(''))
     }
 
     const [profilePic, setProfilePic] = useState('')
+    console.log(profilePic)
 
     const getBase64 = (file, callback) => {
         const reader = new FileReader();
@@ -80,7 +82,6 @@ export const Homepage = () => {
         });
     }
 
-    console.log(profilePic)
 
 
     return (
@@ -122,7 +123,7 @@ export const Homepage = () => {
             <div>
                 {
                     userDesigns.map(d => {
-                        return <DesignList key={d.id} design={d} categeory={categorySelected} func={toggleChange}/>
+                        return <DesignList key={d.id} design={d} categories={categories} func={toggleChange}/>
                     })
                 }
             </div>

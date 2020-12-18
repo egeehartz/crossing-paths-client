@@ -9,14 +9,13 @@ import { DesignContext } from "./DesignProvider"
 // * THIS MODULE REPRESENTS A SINGLE DESIGN CARD
 
 
-export const DesignList = ({ design, category, func }) => {
+export const DesignList = ({ design, categories, func }) => {
     const { deleteDesign, addDesign } = useContext(DesignContext)
     const { createFollowing } = useContext(FollowingsContext)
-    const {categories, getCategories} = useContext(CategoryContext)
 
     const location = useLocation()
     const history = useHistory()
-    const [designObj, setDesignObj] = useState({ design })
+    const [designObj, setDesignObj] = useState({ label:{} })
 
 
     const [modal, setModal] = useState(false);
@@ -26,7 +25,6 @@ export const DesignList = ({ design, category, func }) => {
 
     useEffect(() => {
         setDesignObj(design)
-        getCategories()
     },[])
 
 
