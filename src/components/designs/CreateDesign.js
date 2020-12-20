@@ -20,6 +20,9 @@ export const CreateDesign = () => {
     const [color, setColor] = useState("#000000")
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([]);
+    const [deleteMode, setDeleteMode] = useState(false)
+    const [modal, setModal] = useState(false);
+    const toggle = () => setModal(!modal);
 
     const stageRef = useRef(null)
 
@@ -35,8 +38,17 @@ export const CreateDesign = () => {
 
   
   const handleChange = event => {
-    const userInput = event.target.value.toLowerCase()
-    setSearchTerm(userInput);
+    if (event.target.name === "deleteMode") {
+      if (deleteMode) {
+        setDeleteMode(false)
+      } else {
+        setDeleteMode(true)
+        setColor('#FFFFFF')
+      }
+    } else {
+      const userInput = event.target.value.toLowerCase()
+      setSearchTerm(userInput);
+    }
 };
 
     useEffect(() => {
@@ -101,7 +113,7 @@ export const CreateDesign = () => {
     
 
 
-    const drawRectangle = () => {
+    const drawRectangle = (e) => {
         const blockSnapSize = 16;
 
         //get the x, y positions of the click
@@ -133,32 +145,30 @@ export const CreateDesign = () => {
         //together, they make the top left corner of the Konva Rect
         const newX = arr.slice(-1)
         const newY = arr2.slice(-1)
-        
 
-        //create a rectangle 
-        const rectangle = new Rect({
-            //if an x, y property gets defined, subtract that from the coordinate
-            x: (newX[0]),
-            y: (newY[0]),
-            height: blockSnapSize,
-            width: blockSnapSize,
-            fill: color,
-            stroke: 'black',
-            strokeWidth: 1,
-            draggable: false
-        })
+        const idValue = [newX, newY].join(",")
 
-        //add the rectangle to the layer then draw
-        gridLayer.add(rectangle)
-        gridLayer.draw()
-
-        //add the layer to the stage
-        stageRef.current.add(gridLayer)
+          //create a rectangle 
+          const rectangle = new Rect({
+              //if an x, y property gets defined, subtract that from the coordinate
+              id: idValue,
+              x: (newX[0]),
+              y: (newY[0]),
+              height: blockSnapSize,
+              width: blockSnapSize,
+              fill: color,
+              stroke: 'black',
+              strokeWidth: 0.5,
+              draggable: false
+          })
+  
+          //add the rectangle to the layer then draw
+          gridLayer.add(rectangle)
+          gridLayer.draw()
+  
+          //add the layer to the stage
+          stageRef.current.add(gridLayer)
     }
-
-
-    const [modal, setModal] = useState(false);
-    const toggle = () => setModal(!modal);
 
     const onChange = (e) => {
       const newDesign = Object.assign({}, designObj)
@@ -173,7 +183,6 @@ export const CreateDesign = () => {
 
     const constructPattern = () => {
         const canvas = stageRef.current.toCanvas()
-        console.log(canvas, "1")
         const img = canvas.toDataURL()
 
         addDesign({
@@ -214,6 +223,14 @@ export const CreateDesign = () => {
               kinda like how the friend search is set up
           */}
         </div>
+        <br />
+        <div>
+          <h4>Delete Mode</h4>
+          {deleteMode ? "on" : "off"}
+          <input type="checkbox" name="deleteMode" onChange={handleChange}/>
+
+        </div>
+
         <Modal isOpen={modal} toggle={toggle}>
           <ModalHeader>Save Your Creation!</ModalHeader>
           <ModalBody>
@@ -244,7 +261,8 @@ export const CreateDesign = () => {
           height={896}
           x={0}
           y={0}
-          onClick={() => drawRectangle()} ref={stageRef}
+          onClick={e => drawRectangle(e)} 
+          ref={stageRef}
           style={{cursor:"crosshair", margin: "3rem"}}>
         </Stage>
         </>
