@@ -62,13 +62,11 @@ export const Homepage = () => {
         const picture = {
             profile_img: profilePic
         }
-        console.log(picture)
         changeProfilePicture(picture, user.id)
         .then(setProfilePic(''))
     }
 
     const [profilePic, setProfilePic] = useState('')
-    console.log(profilePic)
 
     const getBase64 = (file, callback) => {
         const reader = new FileReader();
