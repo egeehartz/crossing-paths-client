@@ -36,7 +36,8 @@ export const CreateDesign = () => {
       }
   }, [searchTerm])
 
-  
+  const [gridObj, setGridObj] = useState({width: 896, height: 896})
+
   const handleChange = event => {
     if (event.target.name === "deleteMode") {
       if (deleteMode) {
@@ -45,10 +46,10 @@ export const CreateDesign = () => {
         setDeleteMode(true)
         setColor('#FFFFFF')
       }
-    } else {
+    } else if (event.target.name === "dmc_search") {
       const userInput = event.target.value.toLowerCase()
       setSearchTerm(userInput);
-    }
+    } 
 };
 
     useEffect(() => {
@@ -60,9 +61,8 @@ export const CreateDesign = () => {
       //creates the grid
         const blockSnapSize = 16;
         const padding = blockSnapSize;
-        const width = 896
-        const height = 896
-
+        let width = parseInt(gridObj.width) * 224
+        let height = parseInt(gridObj.height) * 224
     
         //last vertical line
         gridLayer.add(new Line({
@@ -180,6 +180,12 @@ export const CreateDesign = () => {
       setDesignObj(newDesign)
   }
 
+  const onGridChange = (e) => {
+    const newDimensions = Object.assign({}, gridObj)
+    newDimensions[e.target.name] = parseInt(e.target.value) * 224
+    setGridObj(newDimensions)
+  }
+
 
     const constructPattern = () => {
         const canvas = stageRef.current.toCanvas()
@@ -203,10 +209,21 @@ export const CreateDesign = () => {
       setColor(e.hex)
     }
 
+    console.log(gridObj)
+
 
     return (
       <>
         <button onClick={toggle} >save pattern</button>
+        <form>
+          <h4>Project Height</h4>
+          <input type="text" name="height" placeholder="height in inches" value={gridObj.height}  onChange={onGridChange} />
+          <h4>Project Width</h4>
+          <input type="text" name="width" placeholder="width in inches" value={gridObj.width} onChange={onGridChange} />
+          <button onClick={(e) => {
+            e.preventDefault()
+            console.log(e)}}>Create Project Grid</button>
+        </form>
         <div>
         <h4>Change Square Color</h4>
           <TwitterPicker onChange={userColor} />
@@ -214,7 +231,7 @@ export const CreateDesign = () => {
         <br />
         <div>
           <h4>DMC to HEX Converter</h4>
-          <input type="text" placeholder="enter floss color here" value={searchTerm} onChange={handleChange} />
+          <input type="text" name="dmc_search" placeholder="enter floss color here" value={searchTerm} onChange={handleChange} />
           {searchTerm !== "" ?
                         searchResults.map(result => {
                             return <> <li>#{result.rgb_code}, {result.description}</li> </>})
@@ -254,17 +271,19 @@ export const CreateDesign = () => {
             <Button onClick={constructPattern}>Save</Button>
           </ModalFooter>
         </Modal>
+        <div style={{width: "900px", overflow:"scroll"}}>
         <Stage 
           className="stage"
           opacity={0.9}
-          width={896}
-          height={896}
+          width={gridObj.width}
+          height={gridObj.height}
           x={0}
           y={0}
           onClick={e => drawRectangle(e)} 
           ref={stageRef}
           style={{cursor:"crosshair", margin: "3rem"}}>
         </Stage>
+        </div>
         </>
     );
 }
