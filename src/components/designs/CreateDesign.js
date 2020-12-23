@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react"
 import { useHistory } from "react-router-dom";
 import { Modal, ModalBody, ModalFooter, ModalHeader, Collapse, Button } from "reactstrap";
-import { Line, Layer, Rect } from "konva";
+import { Line, Layer, Rect, Group } from "konva";
 import { Stage } from 'react-konva';
 import { TwitterPicker } from 'react-color';
 import { CategoryContext } from "./CategoryProvider";
@@ -101,7 +101,6 @@ export const CreateDesign = () => {
 
     //add layer to the stage and redraw the stage
     stageRef.current.add(gridLayer)
-    stageRef.current.draw()
   }, [])
 
   //this useEffect updates the search results
@@ -167,10 +166,10 @@ export const CreateDesign = () => {
 
     //add the rectangle to the layer then draw
     gridLayer.add(rectangle)
-    gridLayer.draw()
 
     //add the layer to the stage
     stageRef.current.add(gridLayer)
+
   }
 
   // HANDLING THE DESIGN OBJ
@@ -192,20 +191,10 @@ export const CreateDesign = () => {
     console.log(formGridObj)
   }
 
-  // DMC CONVERTER AND DELETE MODE
+  // DMC CONVERTER
   const handleChange = event => {
-    // if (event.target.name === "deleteMode") {
-    //   if (deleteMode) {
-    //     setDeleteMode(false)
-    //   } else {
-    //     setDeleteMode(true)
-    //     setColor('#FFFFFF')
-    //   }
-    // } else
-     if (event.target.name === "dmc_search") {
       const userInput = event.target.value.toLowerCase()
       setSearchTerm(userInput);
-    }
   };
 
   // SAVING THE DESIGN TO THE DATABASE
