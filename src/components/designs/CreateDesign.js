@@ -23,7 +23,7 @@ export const CreateDesign = () => {
   const [formGridObj, setFormGridObj] = useState({})
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [designObj, setDesignObj] = useState({})
+  const [designObj, setDesignObj] = useState({"public": false})
   const [color, setColor] = useState("#000000")
 
   const [deleteMode, setDeleteMode] = useState(false)
