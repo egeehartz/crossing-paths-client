@@ -223,9 +223,9 @@ export const CreateDesign = () => {
       <Collapse isOpen={dimensionsCollapse}>
         <form>
           <h4>Project Height</h4>
-          <input type="text" name="height" placeholder="height in inches" value={formGridObj.height} onChange={onGridChange} />
+          <input type="text" name="height" placeholder="height in inches" value={typeof formGridObj.height === "number" ? formGridObj.height / 224 : formGridObj.height} onChange={onGridChange} />
           <h4>Project Width</h4>
-          <input type="text" name="width" placeholder="width in inches" value={formGridObj.width} onChange={onGridChange} />
+          <input type="text" name="width" placeholder="width in inches" value={typeof formGridObj.width === "number" ? formGridObj.width / 224 : formGridObj.width} onChange={onGridChange} />
           <button onClick={(e) => {
             e.preventDefault()
             setGridObj(formGridObj)
