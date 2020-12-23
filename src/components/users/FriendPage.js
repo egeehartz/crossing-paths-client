@@ -76,7 +76,7 @@ export const FriendPage = () => {
             <div>
                 {
                     userDesigns.map(d => {
-                        return <DesignList key={d.id} design={d} />
+                        return <DesignList key={d.id} design={d} categories={categories} />
                     })
                 }
             </div>
