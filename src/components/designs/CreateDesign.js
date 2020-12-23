@@ -167,7 +167,7 @@ export const CreateDesign = () => {
 
     //add the rectangle to the layer then draw
     gridLayer.add(rectangle)
-    // gridLayer.draw()
+    gridLayer.draw()
 
     //add the layer to the stage
     stageRef.current.add(gridLayer)
