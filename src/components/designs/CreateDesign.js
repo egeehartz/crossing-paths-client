@@ -188,7 +188,7 @@ export const CreateDesign = () => {
     const newDimensions = Object.assign({}, formGridObj)
     newDimensions[e.target.name] = parseInt(e.target.value) * 224
     setFormGridObj(newDimensions)
-    console.log(formGridObj)
+    console.log(newDimensions)
   }
 
   // DMC CONVERTER
