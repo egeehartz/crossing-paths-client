@@ -54,21 +54,6 @@ export const CreateDesign = () => {
     const width = gridObj.width
     const height = gridObj.height
 
-    //last vertical line
-    gridLayer.add(new Line({
-      points: [896, 0, 896, 896],
-      stroke: '#222',
-      strokeWidth: 2
-    }));
-
-    //last horizontal line
-    gridLayer.add(new Line({
-      points: [0, 896, 896, 896],
-      stroke: '#222',
-      strokeWidth: 2
-    }));
-
-
     // vertical lines
     for (let i = 0; i < width / padding; i++) {
       //creates the thicker lines
@@ -101,11 +86,11 @@ export const CreateDesign = () => {
 
     //add layer to the stage and redraw the stage
     stageRef.current.add(gridLayer)
-  }, [])
+  }, [gridObj])
 
   //this useEffect updates the search results
   useEffect(() => {
-    if (searchTerm !== "") {
+    if (searchTerm !== "" && searchTerm.length >= 3) {
       const results = colors.filter(c => c.floss_number.includes(searchTerm))
       setSearchResults(results);
     }
@@ -188,7 +173,6 @@ export const CreateDesign = () => {
     const newDimensions = Object.assign({}, formGridObj)
     newDimensions[e.target.name] = parseInt(e.target.value) * 224
     setFormGridObj(newDimensions)
-    console.log(newDimensions)
   }
 
   // DMC CONVERTER
@@ -218,45 +202,12 @@ export const CreateDesign = () => {
 
   return (
     <>
-      <Button onClick={toggle} >save pattern</Button>
-      <Button onClick={toggleDimensions} color="primary">Change Dimensions</Button>
-      <Collapse isOpen={dimensionsCollapse}>
-        <form>
-          <h4>Project Height</h4>
-          <input type="text" name="height" placeholder="height in inches" value={typeof formGridObj.height === "number" ? formGridObj.height / 224 : formGridObj.height} onChange={onGridChange} />
-          <h4>Project Width</h4>
-          <input type="text" name="width" placeholder="width in inches" value={typeof formGridObj.width === "number" ? formGridObj.width / 224 : formGridObj.width} onChange={onGridChange} />
-          <button onClick={(e) => {
-            e.preventDefault()
-            setGridObj(formGridObj)
-          }}>Change Dimensions</button>
-        </form>
-      </Collapse>
-      <Button onClick={toggleColorCollapse} color="warning">Change Color</Button>
-      <Collapse isOpen={colorCollapse}>
-      <div>
-        <h4>Change Square Color</h4>
-        <TwitterPicker onChange={userColor} />
-      </div>
-      <br />
-      <div>
-        <h4>DMC to HEX Converter</h4>
-        <input type="text" name="dmc_search" placeholder="enter floss color here" value={searchTerm} onChange={handleChange} />
-        {searchTerm !== "" ?
-          searchResults.map(result => {
-            return <> <li>#{result.rgb_code}, {result.description}</li> </>
-          })
-          : ""}
-      </div>
-      </Collapse>
-      {/* <div>
-        <h4>Delete Mode</h4>
-        {deleteMode ? "on" : "off"}
-        <input type="checkbox" name="deleteMode" onChange={handleChange} />
-
-      </div> */}
-
+    <div className="buttonsDiv">
+      <Button onClick={toggle} className="createButtons">save pattern</Button>
+      <Button onClick={toggleDimensions} className="createButtons" color="primary">Change Dimensions</Button>
+      <Button onClick={toggleColorCollapse} className="createButtons" color="warning">Change Color</Button>
       <Button  color={deleteMode ? "danger" : "success"} 
+              className="createButtons"
               onClick={() => {
                 toggleDelete()
                 if(!deleteMode) {
@@ -268,6 +219,39 @@ export const CreateDesign = () => {
         Delete Mode:
         {deleteMode ? "on" : "off"}
       </Button>
+    </div>
+
+      <Collapse isOpen={dimensionsCollapse}>
+        <form>
+          <h4 className="collapseTitles">Project Height</h4>
+          <input className="collapseInputs" type="text" name="height" placeholder="height in inches" value={typeof formGridObj.height === "number" ? formGridObj.height / 224 : formGridObj.height} onChange={onGridChange} />
+          <h4 className="collapseTitles">Project Width</h4>
+          <input className="collapseInputs" type="text" name="width" placeholder="width in inches" value={typeof formGridObj.width === "number" ? formGridObj.width / 224 : formGridObj.width} onChange={onGridChange} />
+          <button onClick={(e) => {
+            e.preventDefault()
+            setGridObj(formGridObj)
+            toggleDimensions()
+          }}>Change Dimensions</button>
+        </form>
+      </Collapse>
+      <Collapse isOpen={colorCollapse}>
+        <div className="colorDiv">
+      <div>
+        <h4 className="collapseTitles">Change Square Color</h4>
+        <TwitterPicker onChange={userColor} />
+      </div>
+      <br />
+      <div>
+        <h4 className="collapseTitles">DMC to HEX Converter</h4>
+        <input className="collapseInputs" type="text" name="dmc_search" placeholder="enter floss color here" value={searchTerm} onChange={handleChange} />
+        {searchTerm !== "" ?
+          searchResults.map(result => {
+            return <> <li>#{result.rgb_code}, {result.description}</li> </>
+          })
+          : ""}
+      </div>
+        </div>
+      </Collapse>
 
 
       {/* MODAL TO LET USER SAVE DESIGN */}
@@ -296,7 +280,8 @@ export const CreateDesign = () => {
       </Modal>
 
 
-      <div style={{ width: "900px", overflow: "scroll" }}>
+      <div className="stageDiv"
+          style={{ height:"700px", width: "900px", overflow: "scroll", background: "white"}}>
         <Stage
           className="stage"
           opacity={0.9}
@@ -306,7 +291,7 @@ export const CreateDesign = () => {
           y={0}
           onClick={e => drawRectangle(e)}
           ref={stageRef}
-          style={{ cursor: "crosshair", margin: "3rem" }}>
+          style={{ cursor: "crosshair" }}>
         </Stage>
       </div>
     </>

@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Quantico:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+
+.navbar__item {
+    color: #7D4F50;
+    font-family: 'Raleway', sans-serif;
+}
+
+.navbar__item:hover {
+    text-decoration: none;
+    color: #CC8B86;
+}

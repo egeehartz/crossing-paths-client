@@ -3,12 +3,13 @@ import { Link } from "react-router-dom"
 import { FollowingsContext } from "./FriendProvider"
 import { UserContext } from "./UserProvider"
 import defaultImg from "./images/default.png"
+import "./FriendList.css"
 
 
 
 
 export const FriendList = () => {
-    const { getCurrentUser, getUsers, users, getUsersToFollow } = useContext(UserContext)
+    const { getCurrentUser, getUsers, getUsersToFollow } = useContext(UserContext)
     const { getFriendsByFollower, createFollowing, deleteFollowing } = useContext(FollowingsContext)
 
     const [friends, setFriends] = useState([])
@@ -52,7 +53,7 @@ export const FriendList = () => {
 
     return (
         <>
-            <h1>Friends</h1>
+            <h1 className="friendTitle">Friends</h1>
             <button onClick={toggle}>
                 {friendsManage ? 'manage' : 'nevermind'}
             </button>
