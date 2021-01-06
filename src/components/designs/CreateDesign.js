@@ -23,7 +23,7 @@ export const CreateDesign = () => {
   const [formGridObj, setFormGridObj] = useState({})
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [designObj, setDesignObj] = useState({"public": false})
+  const [designObj, setDesignObj] = useState({ "public": false })
   const [color, setColor] = useState("#000000")
 
   const [deleteMode, setDeleteMode] = useState(false)
@@ -36,7 +36,7 @@ export const CreateDesign = () => {
   const toggleColorCollapse = () => setColorCollapse(!colorCollapse);
   const [dimensionsCollapse, setDimensionsCollapse] = useState(false);
   const toggleDimensions = () => setDimensionsCollapse(!dimensionsCollapse);
-  
+
 
   //create layer to make the grid, global because it gets called in a useEffect AND drawRect function
   const gridLayer = new Layer({ id: "grid" })
@@ -177,8 +177,8 @@ export const CreateDesign = () => {
 
   // DMC CONVERTER
   const handleChange = event => {
-      const userInput = event.target.value.toLowerCase()
-      setSearchTerm(userInput);
+    const userInput = event.target.value.toLowerCase()
+    setSearchTerm(userInput);
   };
 
   // SAVING THE DESIGN TO THE DATABASE
@@ -202,24 +202,24 @@ export const CreateDesign = () => {
 
   return (
     <>
-    <div className="buttonsDiv">
-      <Button onClick={toggle} className="createButtons">save pattern</Button>
-      <Button onClick={toggleDimensions} className="createButtons" color="primary">Change Dimensions</Button>
-      <Button onClick={toggleColorCollapse} className="createButtons" color="warning">Change Color</Button>
-      <Button  color={deleteMode ? "danger" : "success"} 
-              className="createButtons"
-              onClick={() => {
-                toggleDelete()
-                if(!deleteMode) {
-                  setColor("#FFFFFF")
-                } else {
-                  setColor("#000000")
-                }
-                }}>
-        Delete Mode:
+      <div className="buttonsDiv">
+        <Button onClick={toggle} className="createButtons">save pattern</Button>
+        <Button onClick={toggleDimensions} className="createButtons" color="primary">Change Dimensions</Button>
+        <Button onClick={toggleColorCollapse} className="createButtons" color="warning">Change Color</Button>
+        <Button color={deleteMode ? "danger" : "success"}
+          className="createButtons"
+          onClick={() => {
+            toggleDelete()
+            if (!deleteMode) {
+              setColor("#FFFFFF")
+            } else {
+              setColor("#000000")
+            }
+          }}>
+          Delete Mode:
         {deleteMode ? "on" : "off"}
-      </Button>
-    </div>
+        </Button>
+      </div>
 
       <Collapse isOpen={dimensionsCollapse}>
         <form>
@@ -236,20 +236,27 @@ export const CreateDesign = () => {
       </Collapse>
       <Collapse isOpen={colorCollapse}>
         <div className="colorDiv">
-      <div>
-        <h4 className="collapseTitles">Change Square Color</h4>
-        <TwitterPicker onChange={userColor} />
-      </div>
-      <br />
-      <div>
-        <h4 className="collapseTitles">DMC to HEX Converter</h4>
-        <input className="collapseInputs" type="text" name="dmc_search" placeholder="enter floss color here" value={searchTerm} onChange={handleChange} />
-        {searchTerm !== "" ?
-          searchResults.map(result => {
-            return <> <li>#{result.rgb_code}, {result.description}</li> </>
-          })
-          : ""}
-      </div>
+          <div>
+            <h4 className="collapseTitles">Change Square Color</h4>
+            <TwitterPicker onChange={userColor} />
+          </div>
+          <br />
+          <div>
+            <h4 className="collapseTitles">DMC to HEX Converter</h4>
+            <input className="collapseInputs" type="text" name="dmc_search" placeholder="enter floss color here" value={searchTerm} onChange={handleChange} />
+            {searchTerm !== "" ?
+              searchResults.map(result => {
+                return <>
+                  <li>
+                    #{result.rgb_code},
+                    <p>
+                      {result.description}
+                    </p>
+                  </li>
+                </>
+              })
+              : ""}
+          </div>
         </div>
       </Collapse>
 
@@ -281,7 +288,7 @@ export const CreateDesign = () => {
 
 
       <div className="stageDiv"
-          style={{ height:"700px", width: "900px", overflow: "scroll", background: "white"}}>
+        style={{ height: "700px", width: "900px", overflow: "scroll", background: "white" }}>
         <Stage
           className="stage"
           opacity={0.9}
