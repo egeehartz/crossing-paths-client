@@ -61,17 +61,14 @@
 
 .btn-primary:focus {
     box-shadow: 0 0 0 0.2rem rgb(138, 86, 86, 0.5 ) !important;
-    /* border-color: #8A5656 !important; */
 }
 
 .btn-info:focus {
     box-shadow: 0 0 0 0.2rem rgb(213, 158, 154, 0.5 ) !important;
-    /* border-color: #D59E9A !important; */
 }
 
 .btn-warning:focus {
     box-shadow: 0 0 0 0.2rem rgb(195, 117, 111, 0.5 ) !important;
-    /* border-color: #C3756F !important; */
 }
 
 .modal-content {
