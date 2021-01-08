@@ -6,7 +6,7 @@ import { DesignContext } from "../designs/DesignProvider"
 import { DesignList } from "../designs/DesignList"
 import { UserContext } from "./UserProvider"
 import defaultImg from "./images/default.png"
-
+import "./Homepage.css"
 
 
 export const Homepage = () => {
@@ -86,10 +86,10 @@ export const Homepage = () => {
         <>
             <h1>Homepage</h1>
             {user.profile_img === null || user.profile_img === undefined
-                ? <img src={defaultImg} width='50px' alt="profile" onClick={togglePhotoModal}/>
-                : <img src={user.profile_img} width="50px" alt="profile" onClick={togglePhotoModal} />}
+                ? <img className="profPic" src={defaultImg} width='50px' alt="profile" onClick={togglePhotoModal}/>
+                : <img className="profPic" src={user.profile_img} width="50px" alt="profile" onClick={togglePhotoModal} />}
             {/* <h4>{user.user.username}</h4> */}
-            <div>
+            <div className="categoryOptions">
                 {
                     categories.map(c => {
                         return <div key={"c", c.id}>
@@ -118,7 +118,7 @@ export const Homepage = () => {
                 </div>
             </div>
             <br />
-            <div>
+            <div className="homepageDiv">
                 {
                     userDesigns.map(d => {
                         return <DesignList key={d.id} design={d} categories={categories} func={toggleChange}/>
