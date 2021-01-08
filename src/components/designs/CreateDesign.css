@@ -8,6 +8,7 @@
 
 .createButtons {
     margin: 1rem;
+    font-family: 'Quantico', sans-serif;
 }
 
 .buttonsDiv {
@@ -31,3 +32,42 @@
     flex-direction: column;
     align-items: center;
 }
+
+.formInput{
+    margin: 0.5rem 0;
+}
+
+.checkboxPublic {
+    margin-left: 1rem;
+}
+
+.btn-primary {
+    background-color: #7D4F50 !important;
+    border-color: #7D4F50 !important;
+    color: white !important;
+}
+
+.btn-info {
+    background-color: #CC8B86 !important;
+    border-color: #CC8B86 !important;
+    color: white !important;
+}
+
+.modal-content {
+    background-color: #F9EAE1 !important;
+}
+
+.modal-header, .modal-footer {
+    font-family: 'Quantico', sans-serif;
+}
+
+.modal-body {
+    font-family: 'Raleway', sans-serif;
+}
+
+.btn-warning {
+    background-color: #BD6761 !important;
+    border-color: #BD6761 !important;
+    color: white !important;
+}
+

@@ -8,6 +8,8 @@ import { CategoryContext } from "./CategoryProvider";
 import { ColorContext } from "./ColorProvider";
 import { DesignContext } from "./DesignProvider";
 import "./CreateDesign.css"
+import CreateIcon from '@material-ui/icons/Create';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 
 export const CreateDesign = () => {
@@ -203,9 +205,9 @@ export const CreateDesign = () => {
   return (
     <>
       <div className="buttonsDiv">
-        <Button onClick={toggle} className="createButtons">save pattern</Button>
-        <Button onClick={toggleDimensions} className="createButtons" color="primary">Change Dimensions</Button>
+        <Button onClick={toggle} color="info" className="createButtons">Save Pattern</Button>
         <Button onClick={toggleColorCollapse} className="createButtons" color="warning">Change Color</Button>
+        <Button onClick={toggleDimensions} className="createButtons" color="primary">Change Dimensions</Button>
         <Button color={deleteMode ? "danger" : "success"}
           className="createButtons"
           onClick={() => {
@@ -216,8 +218,7 @@ export const CreateDesign = () => {
               setColor("#000000")
             }
           }}>
-          Delete Mode:
-        {deleteMode ? "on" : "off"}
+        {deleteMode ? <DeleteForeverIcon /> : <CreateIcon /> }
         </Button>
       </div>
 
@@ -265,24 +266,29 @@ export const CreateDesign = () => {
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader>Save Your Creation!</ModalHeader>
         <ModalBody>
-          <input type="text" name="title" placeholder="design name" onChange={onChange} />
-          <select name="category_id" onChange={onChange}>
+          <form>
+          <input className="formInput" type="text" name="title" placeholder="design name" onChange={onChange} />
+          <select className="formInput" name="category_id" onChange={onChange}>
             <option value="0">Select a Category</option>
             {
               categories.map(c => <option value={c.id}>{c.label}</option>)
             }
 
           </select>
+          <div className="formInput">
           <label className="publicLabel">Make Design Public</label>
           <input
+            className="checkboxPublic"
             onChange={onChange}
             type="checkbox"
             name="public"
           />
+          </div>
+          </form>
         </ModalBody>
         <ModalFooter>
-          <Button onClick={toggle}>Keep Working</Button>
-          <Button onClick={constructPattern}>Save</Button>
+          <Button color="primary" onClick={toggle}>Keep Working</Button>
+          <Button color="info" onClick={constructPattern}>Save</Button>
         </ModalFooter>
       </Modal>
 
