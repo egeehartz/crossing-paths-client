@@ -208,16 +208,19 @@ export const CreateDesign = () => {
         <Button onClick={() => {
           setDimensionsCollapse(false)
           setColorCollapse(false)
-          toggle()}} color="info" className="createButtons">Save Pattern</Button>
+          toggle()
+        }} color="info" className="createButtons">Save Pattern</Button>
         <Button onClick={() => {
           setDimensionsCollapse(false)
           setModal(false)
-          toggleColorCollapse()}} className="createButtons" color="warning">Change Color</Button>
+          toggleColorCollapse()
+        }} className="createButtons" color="warning">Change Color</Button>
         <Button onClick={() => {
           setColorCollapse(false)
           setModal(false)
-          toggleDimensions()}}
-           className="createButtons" color="primary">Change Dimensions</Button>
+          toggleDimensions()
+        }}
+          className="createButtons" color="primary">Change Dimensions</Button>
         <Button color={deleteMode ? "danger" : "success"}
           className="createButtons"
           onClick={() => {
@@ -228,7 +231,7 @@ export const CreateDesign = () => {
               setColor("#000000")
             }
           }}>
-        {deleteMode ? <DeleteForeverIcon /> : <CreateIcon /> }
+          {deleteMode ? <DeleteForeverIcon /> : <CreateIcon />}
         </Button>
       </div>
 
@@ -239,7 +242,6 @@ export const CreateDesign = () => {
           <h4 className="collapseTitles">Project Width</h4>
           <input className="collapseInputs" type="text" name="width" placeholder="width in inches" value={typeof formGridObj.width === "number" ? formGridObj.width / 224 : formGridObj.width} onChange={onGridChange} />
           <button className="collapseInputs" onClick={(e) => {
-            e.preventDefault()
             setGridObj(formGridObj)
             toggleDimensions()
           }}>Change Dimensions</button>
@@ -270,49 +272,60 @@ export const CreateDesign = () => {
           </div>
         </div>
       </Collapse>
-
-
-      {/* MODAL TO LET USER SAVE DESIGN */}
       <Collapse isOpen={modal} toggle={toggle}>
         <div className="saveDiv">
-        <h4 className="collapseTitles">Save Your Creation!</h4>
+          <h4 className="collapseTitles">Save Your Creation!</h4>
           <form className="saveForm">
-          <input className="formInput" type="text" name="title" placeholder="design name" onChange={onChange} />
-          <select className="formInput" name="category_id" onChange={onChange}>
-            <option value="0">Select a Category</option>
-            {
-              categories.map(c => <option value={c.id}>{c.label}</option>)
-            }
+            <input className="formInput" type="text" name="title" placeholder="design name" onChange={onChange} />
+            <select className="formInput" name="category_id" onChange={onChange}>
+              <option value="0">Select a Category</option>
+              {
+                categories.map(c => <option value={c.id}>{c.label}</option>)
+              }
 
-          </select>
-          <div className="formInput">
-          <label className="publicLabel">Make Design Public</label>
-          <input
-            className="checkboxPublic"
-            onChange={onChange}
-            type="checkbox"
-            name="public"
-          />
-          </div>
+            </select>
+            <div className="formInput">
+              <label className="publicLabel">Make Design Public</label>
+              <input
+                className="checkboxPublic"
+                onChange={onChange}
+                type="checkbox"
+                name="public"
+              />
+            </div>
           </form>
           <Button className="save-btn" color="info" onClick={constructPattern}>Save</Button>
         </div>
       </Collapse>
 
-
-      <div className="stageDiv"
-        style={{ height: "700px", width: "900px", overflow: "scroll", background: "white" }}>
-        <Stage
-          className="stage"
-          opacity={0.9}
-          width={gridObj.width}
-          height={gridObj.height}
-          x={0}
-          y={0}
-          onClick={e => drawRectangle(e)}
-          ref={stageRef}
-          style={{ cursor: "crosshair" }}>
-        </Stage>
+      <div className="bottomContent">
+        <div className="stageDiv"
+          style={
+            gridObj.height < 700 || gridObj.width < 896 ?
+              { height: "448px", width: "448px", overflow: "scroll", background: "white" }
+              : { height: "700px", width: "900px", overflow: "scroll", background: "white" }
+          }>
+          <Stage
+            className="stage"
+            opacity={0.9}
+            width={gridObj.width}
+            height={gridObj.height}
+            x={0}
+            y={0}
+            onClick={e => drawRectangle(e)}
+            ref={stageRef}
+            style={{ cursor: "crosshair" }}>
+          </Stage>
+        </div>
+        <div>
+          <h3 className="projectTitle">Project Sizing</h3>
+          <p>Project measurements base on 14-count aida cloth</p>
+          <p>Current Project Size: {gridObj.width / 224}" x {gridObj.height / 224}" </p>
+          <p>Center of project is:
+          <br />{(gridObj.width / 2) / 16} squares from the left
+          <br />{(gridObj.height / 2) / 16} squares from the left
+        </p>
+        </div>
       </div>
     </>
   );

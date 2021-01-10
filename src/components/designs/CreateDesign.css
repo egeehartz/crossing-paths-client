@@ -81,6 +81,12 @@
     box-shadow: 0 0 0 0.2rem rgb(195, 117, 111, 0.5 ) !important;
 }
 
-.save-btn {
+.save-btn, .projectTitle {
     font-family: 'Quantico', sans-serif;
+}
+
+.bottomContent {
+    display: flex;
+    color: #7D4F50;
+    text-shadow: #222222 0.5px 0.5px;
 }
