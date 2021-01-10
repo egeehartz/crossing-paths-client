@@ -6,7 +6,15 @@
     font-family: 'Raleway', sans-serif;
 }
 
-.navbar__item:hover {
+.navbar__item:hover, .onPage:hover {
     text-decoration: none;
     color: #CC8B86;
+}
+
+
+.onPage {
+    color: #7D4F50;
+    font-family: "Quantico", sans-serif;
+    font-size: xx-large;
+    text-shadow: 1.5px 1.5px #222222;
 }

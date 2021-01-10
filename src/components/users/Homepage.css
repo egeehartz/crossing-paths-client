@@ -1,4 +1,5 @@
 .categoryOptions {
+    display: flex;
     margin: 1rem 3rem;
 }
 
@@ -6,3 +7,14 @@
     margin: 1rem 3rem;
 }
 
+.sortButtons {
+    margin: 0.5rem;
+    font-family: "Raleway", sans-serif;
+}
+
+
+.homeTitle {
+    text-align: center;
+    color: #643F3F;
+    text-shadow: 1.5px 1.5px #222222;
+}

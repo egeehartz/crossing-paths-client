@@ -20,7 +20,6 @@ export const ExploreList = () => {
 
     return(
         <>
-        <h1>Explore!</h1>
         <div className="exploreDiv">
             {
                 eDesigns.map(d => {

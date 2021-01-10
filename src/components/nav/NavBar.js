@@ -1,23 +1,26 @@
 import React from "react"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import "./NavBar.css"
 
 export const NavBar = (props) => {
+    const location = useLocation()
+    const path = location.pathname
+
     return (
         <ul className="navbar">
-            <Link className="navbar__item" to="/homepage">
+            <Link className={path === "/homepage" ? "onPage" : "navbar__item"} to="/homepage">
                 Home
             </Link>
-            <Link className="navbar__item" to="/">
+            <Link className={path === "/" ? "onPage" : "navbar__item"} to="/">
                 Dashboard
             </Link>
-            <Link className="navbar__item" to="/explore">
+            <Link className={path === "/explore" ? "onPage" : "navbar__item"} to="/explore">
                 Explore
             </Link>
-            <Link className="navbar__item" to="/create">
+            <Link className={path === "/create" ? "onPage" : "navbar__item"} to="/create">
                 Create
             </Link>
-            <Link className="navbar__item" to="/friends">
+            <Link className={path === "/friends" ? "onPage" : "navbar__item"} to="/friends">
                 Friends
             </Link>
             {
