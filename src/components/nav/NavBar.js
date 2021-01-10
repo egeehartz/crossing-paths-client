@@ -11,9 +11,9 @@ export const NavBar = (props) => {
             <Link className={path === "/homepage" ? "onPage" : "navbar__item"} to="/homepage">
                 Home
             </Link>
-            <Link className={path === "/" ? "onPage" : "navbar__item"} to="/">
+            {/* <Link className={path === "/" ? "onPage" : "navbar__item"} to="/">
                 Dashboard
-            </Link>
+            </Link> */}
             <Link className={path === "/explore" ? "onPage" : "navbar__item"} to="/explore">
                 Explore
             </Link>
