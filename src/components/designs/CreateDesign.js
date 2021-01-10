@@ -205,9 +205,19 @@ export const CreateDesign = () => {
   return (
     <>
       <div className="buttonsDiv">
-        <Button onClick={toggle} color="info" className="createButtons">Save Pattern</Button>
-        <Button onClick={toggleColorCollapse} className="createButtons" color="warning">Change Color</Button>
-        <Button onClick={toggleDimensions} className="createButtons" color="primary">Change Dimensions</Button>
+        <Button onClick={() => {
+          setDimensionsCollapse(false)
+          setColorCollapse(false)
+          toggle()}} color="info" className="createButtons">Save Pattern</Button>
+        <Button onClick={() => {
+          setDimensionsCollapse(false)
+          setModal(false)
+          toggleColorCollapse()}} className="createButtons" color="warning">Change Color</Button>
+        <Button onClick={() => {
+          setColorCollapse(false)
+          setModal(false)
+          toggleDimensions()}}
+           className="createButtons" color="primary">Change Dimensions</Button>
         <Button color={deleteMode ? "danger" : "success"}
           className="createButtons"
           onClick={() => {
@@ -223,17 +233,17 @@ export const CreateDesign = () => {
       </div>
 
       <Collapse isOpen={dimensionsCollapse}>
-        <form>
+        <div className="dimensionsDiv">
           <h4 className="collapseTitles">Project Height</h4>
           <input className="collapseInputs" type="text" name="height" placeholder="height in inches" value={typeof formGridObj.height === "number" ? formGridObj.height / 224 : formGridObj.height} onChange={onGridChange} />
           <h4 className="collapseTitles">Project Width</h4>
           <input className="collapseInputs" type="text" name="width" placeholder="width in inches" value={typeof formGridObj.width === "number" ? formGridObj.width / 224 : formGridObj.width} onChange={onGridChange} />
-          <button onClick={(e) => {
+          <button className="collapseInputs" onClick={(e) => {
             e.preventDefault()
             setGridObj(formGridObj)
             toggleDimensions()
           }}>Change Dimensions</button>
-        </form>
+        </div>
       </Collapse>
       <Collapse isOpen={colorCollapse}>
         <div className="colorDiv">
@@ -263,10 +273,10 @@ export const CreateDesign = () => {
 
 
       {/* MODAL TO LET USER SAVE DESIGN */}
-      <Modal isOpen={modal} toggle={toggle}>
-        <ModalHeader>Save Your Creation!</ModalHeader>
-        <ModalBody>
-          <form>
+      <Collapse isOpen={modal} toggle={toggle}>
+        <div className="saveDiv">
+        <h4 className="collapseTitles">Save Your Creation!</h4>
+          <form className="saveForm">
           <input className="formInput" type="text" name="title" placeholder="design name" onChange={onChange} />
           <select className="formInput" name="category_id" onChange={onChange}>
             <option value="0">Select a Category</option>
@@ -285,12 +295,9 @@ export const CreateDesign = () => {
           />
           </div>
           </form>
-        </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={toggle}>Keep Working</Button>
-          <Button color="info" onClick={constructPattern}>Save</Button>
-        </ModalFooter>
-      </Modal>
+          <Button className="save-btn" color="info" onClick={constructPattern}>Save</Button>
+        </div>
+      </Collapse>
 
 
       <div className="stageDiv"

@@ -20,6 +20,8 @@
 .collapseTitles {
     font-family: 'Quantico', sans-serif;
     margin-top: 2rem;
+    color: #7D4F50;
+    text-shadow: 0.5px 0.5px #222222;
 }
 
 .collapseInputs {
@@ -27,14 +29,22 @@
     margin-bottom: 1rem;
 }
 
-.colorDiv {
+.colorDiv, .dimensionsDiv, .saveDiv {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
+    margin-left: 3rem;
+}
+
+.saveForm {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .formInput{
     margin: 0.5rem 0;
+    font-family: 'Raleway', sans-serif;
 }
 
 .checkboxPublic {
@@ -71,16 +81,6 @@
     box-shadow: 0 0 0 0.2rem rgb(195, 117, 111, 0.5 ) !important;
 }
 
-.modal-content {
-    background-color: #F9EAE1 !important;
-}
-
-.modal-header, .modal-footer {
+.save-btn {
     font-family: 'Quantico', sans-serif;
 }
-
-.modal-body {
-    font-family: 'Raleway', sans-serif;
-}
-
-
