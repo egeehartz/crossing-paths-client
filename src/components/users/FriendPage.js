@@ -40,7 +40,7 @@ export const FriendPage = () => {
 
     return (
         <>
-            <h1>{friend.username}'s Page</h1>
+            <h1 className="homeTitle">{friend.username}'s Page</h1>
             <div className="categoryOptions">
                 <div>
                     <Button className="sortButtons"
@@ -67,7 +67,8 @@ export const FriendPage = () => {
             </div>
             <br />
             <div className="friendDiv">
-                {
+                { userDesigns.length === 0 ? 
+                <p className="emptyMessage">This user hasn't added any designs!</p> :
                     userDesigns.map(d => {
                         return <DesignList key={d.id} design={d} categories={categories} />
                     })

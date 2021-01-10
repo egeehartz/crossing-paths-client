@@ -25,3 +25,8 @@
     background-color: #aa998f !important;
     border: #aa998f outset 1px;
 }
+
+.emptyMessage {
+    margin-left: 4rem;
+    color: #643F3F;
+}
