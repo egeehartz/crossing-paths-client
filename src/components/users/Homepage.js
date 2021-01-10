@@ -64,7 +64,10 @@ export const Homepage = () => {
             profile_img: profilePic
         }
         changeProfilePicture(picture, user.id)
-        .then(setProfilePic(''))
+        .then(() => {
+            togglePhotoModal()
+            setProfilePic('')
+            toggleChange()})
     }
 
     const [profilePic, setProfilePic] = useState('')
