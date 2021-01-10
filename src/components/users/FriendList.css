@@ -57,7 +57,7 @@
 .friendsDiv {
     display: flex;
     flex-wrap: wrap;
-    margin: 3rem 2rem;
+    margin: 1rem 2rem 3rem 2rem;
 }
 
 .friend {

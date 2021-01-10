@@ -3,6 +3,7 @@ import { useLocation, useParams } from "react-router-dom"
 import { CategoryContext } from "../designs/CategoryProvider"
 import { DesignContext } from "../designs/DesignProvider"
 import { DesignList } from "../designs/DesignList"
+import { Button } from "reactstrap"
 
 
 
@@ -17,63 +18,55 @@ export const FriendPage = () => {
     const friend = location.state.friendObj.friend    
     
     const [userDesigns, setUserDesigns] = useState([])
-    const [all, setAll] = useState(true)
-    const [categorySelected, setCategorySelected] = useState("")
+    const [categorySelected, setCategorySelected] = useState(0)
 
     
     useEffect(() => {
         getCategories()
         getDesignByUser(friendId)
             .then(setUserDesigns)
-    },[all])
+    },[])
 
     useEffect(() => {
         //if categorySelected is empty, don't do anything (avoids error in the network tab)
-        if(categorySelected !== ""){
-            const userId = friendId
-            setAll(false)
-            getDesignsByUserAndCategory(userId, categorySelected)
+        if(categorySelected !== 0){
+            getDesignsByUserAndCategory(friendId, categorySelected)
                 .then(setUserDesigns)
-        } 
+        } else {
+                getDesignByUser(friendId)
+                    .then(setUserDesigns)
+        }
     }, [categorySelected])
-
-    //resets the state variables tracking the radio buttons
-    const clearFilterButton = () => {
-        setCategorySelected("")
-        setAll(true)
-    }
-
 
     return (
         <>
             <h1>{friend.username}'s Page</h1>
-            <div>
+            <div className="categoryOptions">
+                <div>
+                    <Button className="sortButtons"
+                    color={categorySelected === 0 ? "info" : "primary"}
+                    onClick={() => setCategorySelected(0)}>
+                    All
+                    </Button>
+                </div>
                 {
                     categories.map(c => {
-                        return <div key={c.id}>
-                            <input
-                                type="radio"
-                                value={c.id}
-                                name="categories"
-                                onChange={() => { setCategorySelected(c.id) }}
-                            />{" "}
+                        return <div key={"c", c.id}>
+                            <Button
+                            className="sortButtons"
+                            color={categorySelected === c.id ? "info" : "primary"}
+                            value={c.id}
+                            onClick={() => { setCategorySelected(c.id) }}
+                            >
                             {c.label}
+                            </Button>
                         </div>
                     })
 
                 }
-                <div>
-                    <input
-                    type="radio"
-                    value={0}
-                    name="categories"
-                    onChange={clearFilterButton}
-                    />{" "}
-                    All
-                </div>
             </div>
             <br />
-            <div>
+            <div className="friendDiv">
                 {
                     userDesigns.map(d => {
                         return <DesignList key={d.id} design={d} categories={categories} />
