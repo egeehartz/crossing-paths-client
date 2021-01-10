@@ -71,7 +71,7 @@ export const DesignList = ({ design, categories, func }) => {
                             <p>
                                 posted by
                                 {design.created_by_friend ? 
-                                   <p> {design.user.full_name} </p>
+                                    <>{" "}{design.user.full_name} </>
                                     :
                                 <button onClick={toggle}>
                                     {design.user.full_name}
@@ -89,7 +89,7 @@ export const DesignList = ({ design, categories, func }) => {
                                 <Button color="info" size="sm" onClick={toggleAddModal}>+</Button>
                             </div>
                             : ""}
-                        <p>{design.category.label}</p>
+                        <p>Category: <br />{design.category.label}</p>
                         {/* design link rendering depending on /explore */}
                         {design.link === "" || design.link === "empty" ?
                                 ""

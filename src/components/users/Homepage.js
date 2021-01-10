@@ -6,6 +6,7 @@ import { DesignContext } from "../designs/DesignProvider"
 import { DesignList } from "../designs/DesignList"
 import { UserContext } from "./UserProvider"
 import defaultImg from "./images/default.png"
+import AddIcon from '@material-ui/icons/Add';
 import "./Homepage.css"
 
 
@@ -108,6 +109,7 @@ export const Homepage = () => {
                     })
 
                 }
+                <Button className="sortButtons add-btn" color="info" onClick={toggle}><AddIcon /></Button>
             </div>
             <div className="homepageDiv">
                 {
@@ -116,7 +118,6 @@ export const Homepage = () => {
                     })
                 }
             </div>
-            <button onClick={toggle}>+</button>
             <Modal isOpen={modal} toggle={toggle} >
                 <ModalHeader toggle={toggle}>Add a Design!</ModalHeader>
                 <ModalBody>

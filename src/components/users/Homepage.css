@@ -5,6 +5,8 @@
 
 .profPic {
     margin: 1rem 3rem;
+    border: #222222 1px solid;
+    border-radius: 3%;
 }
 
 .sortButtons {
@@ -17,4 +19,9 @@
     text-align: center;
     color: #643F3F;
     text-shadow: 1.5px 1.5px #222222;
+}
+
+.categoryOptions > .add-btn {
+    background-color: #aa998f !important;
+    border: #aa998f outset 1px;
 }
