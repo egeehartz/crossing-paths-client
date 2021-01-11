@@ -28,10 +28,11 @@ export const CreateDesign = () => {
   const [designObj, setDesignObj] = useState({ "public": false })
   const [color, setColor] = useState("#000000")
 
+  // STATE WITH CORRESPONDING TOGGLE
   const [deleteMode, setDeleteMode] = useState(false)
   const toggleDelete = () => setDeleteMode(!deleteMode)
 
-  //MODALS AND COLLAPSES
+  //MODALS AND COLLAPSES (modal = save pattern) => originally a modal, now a collapse
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
   const [colorCollapse, setColorCollapse] = useState(false);
@@ -101,6 +102,7 @@ export const CreateDesign = () => {
 
   // SETS THE COLOR OF THE SQUARES
   const userColor = (e) => {
+    //grabs the hex from the event
     setColor(e.hex)
   }
 
@@ -323,7 +325,7 @@ export const CreateDesign = () => {
           <p>Current Project Size: {gridObj.width / 224}" x {gridObj.height / 224}" </p>
           <p>Center of project is:
           <br />{(gridObj.width / 2) / 16} squares from the left
-          <br />{(gridObj.height / 2) / 16} squares from the left
+          <br />{(gridObj.height / 2) / 16} squares down
         </p>
         </div>
       </div>

@@ -22,6 +22,8 @@ export const DesignList = ({ design, categories, func }) => {
     const toggle = () => setModal(!modal);
     const [addModal, setAddModal] = useState(false);
     const toggleAddModal = () => setAddModal(!addModal);
+    const [photoModal, setPhotoModal] = useState(false);
+    const togglePhotoModal = () => setPhotoModal(!photoModal);
 
     useEffect(() => {
         setDesignObj(design)
@@ -80,7 +82,7 @@ export const DesignList = ({ design, categories, func }) => {
                             </p>
                             : ""}
                         
-                        <img className="image" src={design.design_img} alt="cross stitch pattern" />
+                        <img onClick={togglePhotoModal} className="image" src={design.design_img} alt="cross stitch pattern" />
 
                         <div className="designDetails">
                         {/* add to board logic */}
@@ -148,6 +150,16 @@ export const DesignList = ({ design, categories, func }) => {
                             <ModalFooter>
                                 <Button onClick={toggleAddModal}>nevermind</Button>
                                 <Button onClick={addToBoard}>Save</Button>
+                            </ModalFooter>
+                        </Modal>
+
+                        <Modal isOpen={photoModal} toggle={togglePhotoModal}>
+                            <ModalHeader>{design.title}</ModalHeader>
+                            <ModalBody>
+                             <img className="imageModal" src={design.design_img} />
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button color="primary" onClick={togglePhotoModal}>close</Button>
                             </ModalFooter>
                         </Modal>
 

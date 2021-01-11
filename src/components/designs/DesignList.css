@@ -80,3 +80,11 @@
     margin-top: 0.55rem;
     margin-right: 0.5rem;
   }
+
+  .imageModal {
+    max-width: 90%;
+    max-height: 90%;
+    margin-bottom: 0.5rem ;
+    background-color: white;
+    border: 1px solid #643F3F;
+  }
