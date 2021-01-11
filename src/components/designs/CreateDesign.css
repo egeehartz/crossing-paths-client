@@ -1,3 +1,92 @@
-.stage {
-    margin-bottom: 3rem;
+@import url('https://fonts.googleapis.com/css2?family=Quantico:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+
+.stageDiv {
+    margin: 2rem;
+    background-color: white;
+}
+
+.createButtons {
+    margin: 1rem;
+    font-family: 'Quantico', sans-serif;
+}
+
+.buttonsDiv {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.collapseTitles {
+    font-family: 'Quantico', sans-serif;
+    margin-top: 2rem;
+    color: #7D4F50;
+    text-shadow: 0.5px 0.5px #222222;
+}
+
+.collapseInputs {
+    font-family: 'Raleway', sans-serif;
+    margin-bottom: 1rem;
+}
+
+.colorDiv, .dimensionsDiv, .saveDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 3rem;
+}
+
+.saveForm {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.formInput{
+    margin: 0.5rem 0;
+    font-family: 'Raleway', sans-serif;
+}
+
+.checkboxPublic {
+    margin-left: 1rem;
+}
+
+.btn-primary {
+    background-color: #7D4F50 !important;
+    border-color: #7D4F50 !important;
+    color: white !important;
+}
+
+.btn-info {
+    background-color: #CC8B86 !important;
+    border-color: #CC8B86 !important;
+    color: white !important;
+}
+
+.btn-warning {
+    background-color: #BD6761 !important;
+    border-color: #BD6761 !important;
+    color: white !important;
+}
+
+.btn-primary:focus {
+    box-shadow: 0 0 0 0.2rem rgb(138, 86, 86, 0.5 ) !important;
+}
+
+.btn-info:focus {
+    box-shadow: 0 0 0 0.2rem rgb(213, 158, 154, 0.5 ) !important;
+}
+
+.btn-warning:focus {
+    box-shadow: 0 0 0 0.2rem rgb(195, 117, 111, 0.5 ) !important;
+}
+
+.save-btn, .projectTitle {
+    font-family: 'Quantico', sans-serif;
+}
+
+.bottomContent {
+    display: flex;
+    color: #7D4F50;
+    text-shadow: #222222 0.5px 0.5px;
 }

@@ -22,6 +22,8 @@ export const DesignList = ({ design, categories, func }) => {
     const toggle = () => setModal(!modal);
     const [addModal, setAddModal] = useState(false);
     const toggleAddModal = () => setAddModal(!addModal);
+    const [photoModal, setPhotoModal] = useState(false);
+    const togglePhotoModal = () => setPhotoModal(!photoModal);
 
     useEffect(() => {
         setDesignObj(design)
@@ -66,13 +68,12 @@ export const DesignList = ({ design, categories, func }) => {
                     <div className="flip-card-back">
                         <h4>{design.title}</h4>
                         
-
                         {/* posted by logic */}
                         {location.pathname === "/explore" ?
                             <p>
                                 posted by
                                 {design.created_by_friend ? 
-                                   <p> {design.user.full_name} </p>
+                                    <>{" "}{design.user.full_name} </>
                                     :
                                 <button onClick={toggle}>
                                     {design.user.full_name}
@@ -81,18 +82,16 @@ export const DesignList = ({ design, categories, func }) => {
                             </p>
                             : ""}
                         
+                        <img onClick={togglePhotoModal} className="image" src={design.design_img} alt="cross stitch pattern" />
+
+                        <div className="designDetails">
                         {/* add to board logic */}
                         {location.pathname === "/explore" ?
                             <div>
-                                <Button onClick={toggleAddModal}>+</Button>
+                                <Button color="info" size="sm" onClick={toggleAddModal}>+</Button>
                             </div>
                             : ""}
-
-
-                        <img className="image" src={design.design_img} alt="cross stitch pattern" />
-                        <p>{design.category.label}</p>
-
-
+                        <p>Category: <br />{design.category.label}</p>
                         {/* design link rendering depending on /explore */}
                         {design.link === "" || design.link === "empty" ?
                                 ""
@@ -100,20 +99,23 @@ export const DesignList = ({ design, categories, func }) => {
                                 <a className="design_link"
                                     href={design.link} target="_blank">source</a> 
                             }
+                        </div>
+
+
 
 
                         {/* edit/delete logic */}
                         {location.pathname === "/homepage" ?
-                            <>
-                                <Button onClick={() => {
+                            <div className="personalButtons">
+                                <Button color="info" size="sm" onClick={() => {
                                     deleteDesign(design.id)
                                         .then(func)
                                 }}>X</Button>
-                                <Button
+                                <Button color="info" size="sm" 
                                     onClick={() => {
                                         history.push(`/edit/${design.id}`)
                                     }}>EDIT</Button>
-                            </>
+                            </div>
                             : ""}
 
 
@@ -121,8 +123,8 @@ export const DesignList = ({ design, categories, func }) => {
                         <Modal isOpen={modal} toggle={toggle} >
                             <ModalHeader toggle={toggle}>Follow {design.user.username}</ModalHeader>
                             <ModalBody>
-                                <Button color="primary" onClick={constructFollow}>Follow!</Button>{' '}
-                                <Button color="secondary" onClick={toggle}>nevermind</Button>
+                                <Button color="info" onClick={constructFollow}>Follow!</Button>{' '}
+                                <Button color="primary" onClick={toggle}>nevermind</Button>
                             </ModalBody>
                         </Modal>
 
@@ -148,6 +150,16 @@ export const DesignList = ({ design, categories, func }) => {
                             <ModalFooter>
                                 <Button onClick={toggleAddModal}>nevermind</Button>
                                 <Button onClick={addToBoard}>Save</Button>
+                            </ModalFooter>
+                        </Modal>
+
+                        <Modal isOpen={photoModal} toggle={togglePhotoModal}>
+                            <ModalHeader>{design.title}</ModalHeader>
+                            <ModalBody>
+                             <img className="imageModal" src={design.design_img} />
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button color="primary" onClick={togglePhotoModal}>close</Button>
                             </ModalFooter>
                         </Modal>
 

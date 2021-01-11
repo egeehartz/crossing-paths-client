@@ -3,8 +3,9 @@
     background-color: transparent;
     width: 300px;
     height: 300px;
-    border: 1px solid #f1f1f1;
+    /* border: 1px solid #f1f1f1; */
     perspective: 1000px; /* Remove this if you don't want the 3D effect */
+    margin: 0.5rem;
   }
   
   /* This container is needed to position the front and back side */
@@ -33,15 +34,17 @@
   
   /* Style the front side (fallback if image is missing) */
   .flip-card-front {
-    background-color: #bbb;
-    color: black;
+    background-color: #aa998f;
+    color: #643F3F;
+    font-family: "Quantico", sans-serif;
   }
   
   /* Style the back side */
   .flip-card-back {
-    background-color: dodgerblue;
+    background-color: #7d4f50;
     color: white;
     transform: rotateY(180deg);
+    font-family: "Quantico", sans-serif;
   }
 
   .design_link {
@@ -49,7 +52,39 @@
   }
 
   .image {
-    max-width: 90%;
-    max-height: 60%;
+    max-width: 80%;
+    max-height: 50%;
     margin-bottom: 0.5rem ;
+    background-color: white;
+    border: 1px solid #643F3F;
+  }
+
+  .designDetails {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+  }
+
+  .designDetails > div, .designDetails > p {
+    margin: 0 1rem;
+  }
+
+  .personalButtons > .btn {
+    margin: 0.25rem;
+  }
+
+  .personalButtons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-top: 0.55rem;
+    margin-right: 0.5rem;
+  }
+
+  .imageModal {
+    max-width: 90%;
+    max-height: 90%;
+    margin-bottom: 0.5rem ;
+    background-color: white;
+    border: 1px solid #643F3F;
   }

@@ -21,7 +21,7 @@ export const AppViews = props => (
                 <UserProvider>
                     <FollowingsProvider>
                         <ColorProvider>
-                            <Route exact path="/" render={Dashboard} />
+                            {/* <Route exact path="/" render={Dashboard} /> */}
                             <Route exact path="/homepage"
                                 render={(props) => <Homepage {...props} />}
                             />

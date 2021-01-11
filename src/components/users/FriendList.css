@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Quantico:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+
+
+.friendTitle, .friendSearch {
+    color: #643F3F;
+    margin-left: 3rem;
+}
+
+.friendSearch {
+    font-family: "Raleway", sans-serif;
+}
+
+.potentialFriends {
+    list-style-type: none;
+}
+
+.followFriend {
+    display: flex;
+}
+
+.followFriend > li {
+    font-family: "Raleway", sans-serif;
+    color: #7d4f50; 
+    margin: 1rem;
+}
+
+.followFriend > .btn {
+    height: fit-content;
+    align-self: center;
+    background-color: #CC8B86 !important;
+    border-color: #CC8B86 !important;
+}
+
+.followFriend > .btn:focus {
+    box-shadow: 0 0 0 0.2rem rgb(213, 158, 154, 0.5 ) !important;
+}
+
+.btn-info {
+    background-color: #CC8B86 !important;
+    border-color: #CC8B86 !important;
+    color: white !important;
+    font-family: "Raleway", sans-serif;
+    margin-bottom: 0.5rem;
+    width: fit-content;
+
+}
+
+.btn-info:focus {
+    box-shadow: 0 0 0 0.2rem rgb(213, 158, 154, 0.5 ) !important;
+}
+
+.manageButton {
+    margin-left: 3rem;
+}
+
+.friendsDiv {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 1rem 2rem 3rem 2rem;
+}
+
+.friend {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 1rem;
+    height: 250px;
+    width: 150px;
+    border: 1px solid #7d4f50;
+    border-radius: 3%;
+    padding: 0.5rem;
+    background-color: #f9eae1;
+}
+
+.friend > img {
+    max-height: 150px;
+    max-width: 100px;
+    align-self: center;
+    border: 1px solid #7d4f50;
+}
+
+.friendText {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+
+}
+
+.friendText > a {
+    font-family: "Quantico", sans-serif;
+    color: #cc8b86;
+}
+
+.friendText > a:hover {
+    color: #643F3F;
+}
+
+.friendText > p {
+    font-family: "Raleway", sans-serif;
+    color: #643F3F;
+}

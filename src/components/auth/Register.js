@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react"
 import { Link } from "react-router-dom"
+import {Button} from "reactstrap"
 
 export const Register = (props) => {
 
@@ -48,7 +49,7 @@ export const Register = (props) => {
                 .then(res => res.json())
                 .then(res => {
                         localStorage.setItem("cp_user", res.token)
-                        props.history.push("/") //redirects to home page
+                        props.history.push("/homepage") //redirects to home page
                 })
         } else {
             passwordDialog.current.showModal()
@@ -64,41 +65,42 @@ export const Register = (props) => {
             </dialog>
             <form className="form--login" onSubmit={handleRegister}>
                 <h1 className="h3 mb-3 font-weight-normal">Register an account</h1>
-                <fieldset>
+                <fieldset className="fieldset">
                     <label htmlFor="firstName"> First Name </label>
                     <input ref={firstName} type="text" name="firstName" className="form-control" placeholder="first name" />
                 </fieldset>
-                <fieldset>
+                <fieldset className="fieldset">
                     <label htmlFor="lastName"> Last Name </label>
                     <input ref={lastName} type="text" name="lastName" className="form-control" placeholder="last name" />
                 </fieldset>
-                <fieldset>
+                <fieldset className="fieldset">
                     <label htmlFor="userName"> Username </label>
                     <input ref={userName} type="text" name="userName" className="form-control" placeholder="display name" />
                 </fieldset>
-                <fieldset>
+                <fieldset className="fieldset">
                     <label htmlFor="inputEmail"> Email Address</label>
                     <input ref={email} type="email" name="email" className="form-control" placeholder="email address" required />
                 </fieldset>
-                <fieldset>
+                <fieldset className="profPic-set fieldset">
                     <label htmlFor="profile_image_url"> Profile Image </label>
                     <input className="register-input" type="file" id="profile_image" onChange={(evt) => {createProfileImageJSON(evt)}}/>
                 </fieldset>
-                <fieldset>
+                <fieldset className="fieldset">
                     <label htmlFor="inputPassword"> Password </label>
                     <input ref={password} type="password" name="password" className="form-control" placeholder="password" required />
                 </fieldset>
-                <fieldset>
+                <fieldset className="fieldset">
                     <label htmlFor="verifyPassword"> Verify Password </label>
                     <input ref={verifyPassword} type="password" name="verifyPassword" className="form-control" placeholder="re-enter password" required />
                 </fieldset>
-                <fieldset>
-                    <button className="btn btn-1 btn-sep icon-send" type="submit">Register</button>
+                <fieldset className="fieldset">
+                    <Button className="loginButton" color="info" type="submit">Register</Button>
                 </fieldset>
             </form>
             <section className="link--register">
-                <div>Already Registered?</div>
+                <div>Already Registered?{" "}
                 <Link to="/login">Login</Link>
+                </div>
             </section>
         </main>
     )

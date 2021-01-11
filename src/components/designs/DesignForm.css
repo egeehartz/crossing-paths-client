@@ -2,8 +2,17 @@ form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-family: "Raleway", sans-serif;
+    color: #7D4F50;
 }
 
+.formTitle {
+    text-align: center;
+    color: #7D4F50;
+    font-family: "Quantico", sans-serif;
+    text-shadow: 1.5px 1.5px #222222;
+    margin-bottom: 3rem;
+}
 .designInput {
     margin-bottom: 3rem;
     width: fit-content;
@@ -14,8 +23,8 @@ form {
 }
 
 .register-input {
-    margin-top: 0.25rem;
     margin-left: 1rem;
+    margin-bottom: 2rem;
 }
 .submitButton {
     margin-top: 3rem;
@@ -26,3 +35,7 @@ form {
     margin-left: 7rem;
 }
 
+.previewPic {
+    border: 1px solid #7D4F50;
+    margin-bottom: 1rem;
+}

@@ -6,7 +6,8 @@ import { DesignContext } from "../designs/DesignProvider"
 import { DesignList } from "../designs/DesignList"
 import { UserContext } from "./UserProvider"
 import defaultImg from "./images/default.png"
-
+import AddIcon from '@material-ui/icons/Add';
+import "./Homepage.css"
 
 
 export const Homepage = () => {
@@ -63,7 +64,10 @@ export const Homepage = () => {
             profile_img: profilePic
         }
         changeProfilePicture(picture, user.id)
-        .then(setProfilePic(''))
+        .then(() => {
+            togglePhotoModal()
+            setProfilePic('')
+            toggleChange()})
     }
 
     const [profilePic, setProfilePic] = useState('')
@@ -80,52 +84,43 @@ export const Homepage = () => {
         });
     }
 
-
-
     return (
         <>
-            <h1>Homepage</h1>
             {user.profile_img === null || user.profile_img === undefined
-                ? <img src={defaultImg} width='50px' alt="profile" onClick={togglePhotoModal}/>
-                : <img src={user.profile_img} width="50px" alt="profile" onClick={togglePhotoModal} />}
-            {/* <h4>{user.user.username}</h4> */}
-            <div>
+                ? <img className="profPic" src={defaultImg} width='100px' alt="profile" onClick={togglePhotoModal}/>
+                : <img className="profPic" src={user.profile_img} width="100px" alt="profile" onClick={togglePhotoModal} />}
+            <div className="categoryOptions">
+                <div>
+                    <Button className="sortButtons"
+                    color={categorySelected === 0 ? "info" : "primary"}
+                    onClick={() => setCategorySelected(0)}>
+                    All
+                    </Button>
+                </div>
                 {
                     categories.map(c => {
                         return <div key={"c", c.id}>
-                            <input
-                                type="radio"
-                                value={c.id}
-                                name="categories"
-                                onChange={() => { setCategorySelected(c.id) }}
-                            />{" "}
+                            <Button
+                            className="sortButtons"
+                            color={categorySelected === c.id ? "info" : "primary"}
+                            value={c.id}
+                            onClick={() => { setCategorySelected(c.id) }}
+                            >
                             {c.label}
+                            </Button>
                         </div>
                     })
 
                 }
-                <div>
-                    {/* <button onClick={clearFilterButton}>
-                    All
-                    </button> */}
-                    <input
-                                type="radio"
-                                value={0}
-                                name="categories"
-                                onChange={() => { setCategorySelected(0) }}
-                            />{" "}
-                            {"all"}
-                </div>
+                <Button className="sortButtons add-btn" color="info" onClick={toggle}><AddIcon /></Button>
             </div>
-            <br />
-            <div>
+            <div className="homepageDiv">
                 {
                     userDesigns.map(d => {
                         return <DesignList key={d.id} design={d} categories={categories} func={toggleChange}/>
                     })
                 }
             </div>
-            <button onClick={toggle}>+</button>
             <Modal isOpen={modal} toggle={toggle} >
                 <ModalHeader toggle={toggle}>Add a Design!</ModalHeader>
                 <ModalBody>

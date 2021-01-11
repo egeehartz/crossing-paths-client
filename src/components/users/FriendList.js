@@ -1,14 +1,17 @@
 import React, { useContext, useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import {Button} from "reactstrap"
 import { FollowingsContext } from "./FriendProvider"
 import { UserContext } from "./UserProvider"
 import defaultImg from "./images/default.png"
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import "./FriendList.css"
 
 
 
 
 export const FriendList = () => {
-    const { getCurrentUser, getUsers, users, getUsersToFollow } = useContext(UserContext)
+    const { getCurrentUser, getUsers, getUsersToFollow } = useContext(UserContext)
     const { getFriendsByFollower, createFollowing, deleteFollowing } = useContext(FollowingsContext)
 
     const [friends, setFriends] = useState([])
@@ -52,41 +55,47 @@ export const FriendList = () => {
 
     return (
         <>
-            <h1>Friends</h1>
-            <button onClick={toggle}>
+            {/* <h1 className="friendTitle">Friends</h1> */}
+            <div className="manageButton">
+            <Button color="info" size="sm" onClick={toggle}>
                 {friendsManage ? 'manage' : 'nevermind'}
-            </button>
-            <div>
+            </Button>
+            </div>
+            <div className="friendsDiv">
                 {
                     friends.map(f => {
-                        return <div>
-                            {f.friend.profile_img === null || f.friend.profile_img === undefined
-                                ? <img src={defaultImg} width='50px' alt="profile" />
-                                : <img src={f.friend.profile_img} width='50px' alt="profile" />
-                            }
-                            <Link to={{ pathname: `/profile/${f.friend.id}`, state: { friendObj: f } }}>
-                                {f.friend.full_name}
-                            </Link>
+                        return <div className="friend">
                             {friendsManage ?
                              "" : 
-                             <button onClick={() => {
+                             <Button size="sm" color="info" onClick={() => {
                                  deleteFollowing(f.id)
                                     .then(toggleFollow)
                              }
-                            }>unfollow</button>
+                            }><HighlightOffIcon /></Button>
                             }
+                            {f.friend.profile_img === null || f.friend.profile_img === undefined
+                                ? <img src={defaultImg}  alt="profile" />
+                                : <img src={f.friend.profile_img}  alt="profile" />
+                            }
+                            <div className="friendText">
+                            <Link to={{ pathname: `/profile/${f.friend.id}`, state: { friendObj: f } }}>
+                                {f.friend.full_name}
+                            </Link>
+                            <p>{f.friend.username}</p>
+                            </div>
                         </div>
                     })
                 }
             </div>
             <div>
-                <h2>Find Friends!</h2>
-                <input type="text" value={searchTerm} onChange={handleChange} placeholder="search by username" />
-                <ul>
+                <h2 className="friendTitle">Find Friends!</h2>
+                <input className="friendSearch" type="text" value={searchTerm} onChange={handleChange} placeholder="search by username" />
+                <ul className="potentialFriends">
                     {searchTerm !== "" ?
                         searchResults.map(result => {
-                            return <> <li>{result.user.username}</li>
-                                <button onClick={() => {
+                            return <> <div className="followFriend">
+                                <li>{result.user.username}</li>
+                                <Button size="sm" onClick={() => {
                                     createFollowing({
                                         friendId: result.id
                                     })
@@ -98,7 +107,9 @@ export const FriendList = () => {
                                                     .then(setSearchTerm(""))
                                                     .then(toggleFollow)
                                             }))
-                                }}>follow</button> </>
+                                }}>follow</Button> 
+                                </div>
+                                </>
                         }) : ""
                     }
                 </ul>

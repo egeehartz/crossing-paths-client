@@ -4,6 +4,7 @@ import { useForm, Controller } from "react-hook-form";
 import { CategoryContext } from "./CategoryProvider";
 import { DesignContext } from "./DesignProvider";
 import "./DesignForm.css"
+import { Button } from "reactstrap";
 
 
 
@@ -93,8 +94,9 @@ export const DesignForm = () => {
 
     return (
         <>
-            {editMode ? <h1>Edit Design</h1> : <h1>Add a New Design!</h1>}
-            <form onSubmit={handleSubmit(onSubmit)}>
+            {editMode ? <h1 className="formTitle">Edit Design</h1> 
+            : <h1 className="formTitle">Add a New Design!</h1>}
+            <form className="designForm" onSubmit={handleSubmit(onSubmit)}>
                     <Controller name="title" 
                                 control={control} 
                                 defaultValue={designObj.title} 
@@ -155,11 +157,17 @@ export const DesignForm = () => {
                         <>
                         {editMode ? 
                         <>
-                        <label>Image Chosen:</label>
-                        <img src={designObj.design_img} width="150px" /> 
-                        <label>Change Image:</label>
+                        <label>Current Image:</label>
+                        <img className="previewPic" src={designObj.design_img} width="150px" /> 
+                        <label>Change Image To:</label>
+                        {designImg !== " " ? <img className="previewPic" src={designImg} width="150px" /> : ""}
                         </>
-                        : <label>Image:</label>}
+                        : <> 
+                        <label>Image:</label>
+                        {designImg !== " " ? <img className="previewPic" src={designImg} width="150px" /> : ""}
+                        </>
+
+                        }
                         <input
                         defaultValue={designObj.design_img}
                         className="designInput chooseFile"
@@ -180,7 +188,6 @@ export const DesignForm = () => {
                     render={props =>
                         <>
                         <div className="checkbox-public">
-                      
                         <label className="publicLabel">Make Design Public</label>
                         <input
                             // defaultValue={designObj.public}
@@ -195,10 +202,7 @@ export const DesignForm = () => {
                         </>
                     }
                 />
-
-
-
-                <input className="submitButton" type="submit" />
+                <Button color="info" className="submitButton" type="submit">Save</Button>
             </form>
         </>
     )
