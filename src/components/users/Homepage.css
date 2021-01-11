@@ -38,7 +38,7 @@
 .link--register {
     text-align: center;
     color: #643F3F;
-    margin-top: 2rem;
+    margin: 2rem 0;
     font-family: "Quantico", sans-serif;
 }
 
@@ -50,4 +50,17 @@
 .link--register > div > a:hover {
     text-decoration: none;
     color: #CC8B86;
+}
+
+.profPic-set {
+    display: flex;
+    flex-direction: column;
+}
+
+.profPic-set > input {
+    margin-left: 8.7rem;
+}
+
+.fieldset {
+    margin-bottom: 1.5rem;
 }
