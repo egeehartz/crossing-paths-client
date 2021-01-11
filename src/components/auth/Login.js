@@ -1,5 +1,7 @@
 import React, { useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { Button } from "reactstrap"
+import "../users/Homepage.css"
 
 
 export const Login = (props) => {
@@ -41,7 +43,7 @@ export const Login = (props) => {
             </dialog>
             <section>
                 <form className="form--login" onSubmit={handleLogin}>
-                    <h1>Rare</h1>
+                    <h1 className="loginTitle">Crossing Paths</h1>
                     <h2>Sign In</h2>
                     <fieldset>
                         <label htmlFor="inputUser"> Username: </label>
@@ -52,13 +54,14 @@ export const Login = (props) => {
                         <input ref={password} type="password" id="password" className="form-control" placeholder="password" required />
                     </fieldset>
                     <fieldset>
-                        <button className="btn btn-1 btn-sep icon-send" type="submit">Sign In</button>
+                        <Button className="loginButton" color="info" type="submit">Sign In</Button>
                     </fieldset>
                 </form>
             </section>
             <section className="link--register">
-                <div>Not a member yet?</div>
+                <div>Not a member yet? {" "}
                 <Link to="/register">Register Here</Link> 
+                </div>
             </section>
         </main>
     )

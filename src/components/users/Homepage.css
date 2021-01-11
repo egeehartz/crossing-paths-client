@@ -15,7 +15,7 @@
 }
 
 
-.homeTitle {
+.homeTitle, .loginTitle {
     text-align: center;
     color: #643F3F;
     text-shadow: 1.5px 1.5px #222222;
@@ -29,4 +29,25 @@
 .emptyMessage {
     margin-left: 4rem;
     color: #643F3F;
+}
+
+.loginButton {
+    margin-top: 2rem;
+}
+
+.link--register {
+    text-align: center;
+    color: #643F3F;
+    margin-top: 2rem;
+    font-family: "Quantico", sans-serif;
+}
+
+.link--register > div > a {
+    text-decoration: none;
+    color: #643F3F;
+}
+
+.link--register > div > a:hover {
+    text-decoration: none;
+    color: #CC8B86;
 }
