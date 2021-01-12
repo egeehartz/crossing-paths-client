@@ -88,3 +88,13 @@
     background-color: white;
     border: 1px solid #643F3F;
   }
+
+  .modal-content {
+    background-color:  #DFD1B9 !important;
+}
+
+.modal-content > .modal-header {
+  font-family: "Quantico", sans-serif;
+  color:#643F3F;
+}
+
