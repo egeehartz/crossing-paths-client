@@ -98,3 +98,14 @@
   color:#643F3F;
 }
 
+.modal-header {
+  border-bottom: 1px solid #7D4F50 !important;
+}
+
+.modal-footer {
+  border-top: 1px solid #7D4F50 !important;  
+}
+
+.btn-info {
+  margin: 0 !important;
+}

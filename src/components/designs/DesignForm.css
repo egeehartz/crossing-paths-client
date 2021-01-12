@@ -46,11 +46,3 @@ form {
     border: 1px solid #7D4F50;
     margin-bottom: 1rem;
 }
-
-.modal-header {
-    border-bottom: 1px solid #7D4F50 !important;
-}
-
-.modal-footer {
-    border-top: 1px solid #7D4F50 !important;  
-}
