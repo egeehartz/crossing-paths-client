@@ -122,7 +122,7 @@ export const DesignList = ({ design, categories, func }) => {
                         <Modal isOpen={modal} toggle={toggle} >
                             <ModalHeader toggle={toggle}>Follow {design.user.full_name}?</ModalHeader>
                             <ModalBody>
-                                <Button color="info" onClick={constructFollow}>Follow!</Button>{' '}
+                                <Button className="follow-btn" color="info" onClick={constructFollow}>Follow!</Button>{' '}
                                 <Button color="primary" onClick={toggle}>nevermind</Button>
                             </ModalBody>
                         </Modal>
@@ -157,7 +157,7 @@ export const DesignList = ({ design, categories, func }) => {
                                 <Button color="info" onClick={addToBoard}>Save</Button>
                             </ModalFooter>
                         </Modal>
-
+                        {/* Modal that shows a larger image */}
                         <Modal isOpen={photoModal} toggle={togglePhotoModal}>
                             <ModalHeader>{design.title}</ModalHeader>
                             <ModalBody>
