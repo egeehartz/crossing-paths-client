@@ -22,13 +22,18 @@ Features include:
 
 ## ERD
 
-<img src="./CP_ERD.png">
+<img src="./images/CP_ERD.png">
 
 ## GIFs
 > coming soon
 
 ## PICs
-> coming soon
+
+| <img src="./images/home2.png"> | <img src="./images/explore2.png"> | <img src="./images/create.png"> |
+| :---: | :---: | :---: |
+| homepage | explore page | create page |
+| :---: | :---: | :---: |
+ View designs<br />Edit designs<br />View by category<br />Add a new design | View designs that are public and/or posted by friends | Create your own cross-stitch design<br />change the size of the project and the colors used in the project 
 
 ## Setup - Back End
 1. Clone the [back end](https://github.com/egeehartz/back-end-capstone)
