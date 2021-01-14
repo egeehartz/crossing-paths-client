@@ -1,70 +1,58 @@
-# Getting Started with Create React App
+# Welcome to Crossing Paths!
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> A social media app for people who love to Cross-Stitch! 
 
-## Available Scripts
+## The Idea
 
-In the project directory, you can run:
+One day I was sitting with graph paper and markers copying a cross-stitch design from the internet and thought it would be cool if there was a way to create designs using a computer. From that idea, I decided to make this project adding a few other features to make it more like a social media app.
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+This app allows users to create, post, and organize cross-stitch designs. <br />
+Features include:
+* A Homepage where a user can organize their designs into three categories and add new designs
+* A Friends page where users can manage who they follow and search for users to follow
+    * Users can click on their friend's username to see their page
+* An Explore page where users can see public designs and designs posted by people they follow
+    * Users can follow people from this page as well
+    * Users can add designs they see on the Explore page to their own page
+* A Create page where users can design a cross-stitch pattern
+    * Users can choose the size of their project and colors used in the project
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm test`
+## ERD
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<img src="./images/CP_ERD.png">
 
-### `npm run build`
+## GIFs
+> coming soon
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## PICs
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+| <img src="./images/home2.png"> | <img src="./images/explore2.png"> | <img src="./images/create.png"> |
+| :---: | :---: | :---: |
+| homepage | explore page | create page |
+| :---: | :---: | :---: |
+ View designs<br />Edit designs<br />View by category<br />Add a new design | View designs that are public and/or posted by friends | Create your own cross-stitch design<br />change the size of the project and the colors used in the project 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Setup - Back End
+1. Clone the [back end](https://github.com/egeehartz/back-end-capstone)
+2. (instructions coming soon)
 
-### `npm run eject`
+## Setup - Front End
+1. Clone this repository
+2. ```cd``` into the directory
+3. Install the necessary packages:
+* ```npm install```
+* ```npm i --save react react-dom react-router-dom reactstrap```
+* ```npm i --save bootstrap```
+* ```npm install react-konva konva```
+* ```npm install react-hook-form```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+4. Make sure the backend is running
+5. In the terminal ```npm start``` from the repository directory
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Author
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Emily Hartzell - [GitHub](https://github.com/egeehartz), [LinkedIn](www.linkedin.com/in/emilyhartzell), [Personal Website](https://egeehartz.github.io)

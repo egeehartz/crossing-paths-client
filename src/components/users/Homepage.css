@@ -64,3 +64,15 @@
 .fieldset {
     margin-bottom: 1.5rem;
 }
+
+.photoModalText {
+    color: #643F3F;
+}
+
+.photoText {
+    margin-top: 1rem;
+}
+
+.existingDesign {
+    margin: 0 !important;
+  }

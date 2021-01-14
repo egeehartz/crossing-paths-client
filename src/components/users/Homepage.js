@@ -125,31 +125,29 @@ export const Homepage = () => {
                 <ModalHeader toggle={toggle}>Add a Design!</ModalHeader>
                 <ModalBody>
                     <Link to="/create">
-                        <Button color="primary" onClick={toggle}>Create a New One</Button>{' '}
+                        <Button color="info" className="existingDesign" onClick={toggle}>Create a New One</Button>{' '}
                     </Link>
                     <Link to="/add">
-                        <Button color="secondary" onClick={toggle}>Upload an Existing design</Button>
+                        <Button color="primary"  onClick={toggle}>Upload an Existing design</Button>
                     </Link>
                 </ModalBody>
             </Modal>
-
-
             {/* photo upload modal */}
             <Modal isOpen={photoModal} toggle={togglePhotoModal} >
                 <ModalHeader toggle={togglePhotoModal}>Change Profile Picture</ModalHeader>
                 <ModalBody>
                     <div>
-                        <p>current picture</p>
-                        <img src={user.profile_img} width="75px" />
+                        <p className="photoModalText">current picture</p>
+                        <img className="image" src={user.profile_img} width="100px" />
                     </div>
                     <div>
-                        <p>new</p>
-                        {profilePic !== "" ? <img src={profilePic} width="75px" /> : ""}
+                        <p className="photoModalText photoText">new</p>
+                        {profilePic !== "" ? <img className="image" src={profilePic} width="100px" /> : ""}
                     </div>
                     <input type="file" name="profile_img" onChange={e => createProfileImageJSON(e)} />
                 </ModalBody>
                 <ModalFooter>
-                    <Button onClick={addProfilePicture}>Save</Button>
+                    <Button color="info" onClick={addProfilePicture}>Save</Button>
                 </ModalFooter>
             </Modal>
         </>

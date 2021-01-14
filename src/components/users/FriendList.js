@@ -55,7 +55,6 @@ export const FriendList = () => {
 
     return (
         <>
-            {/* <h1 className="friendTitle">Friends</h1> */}
             <div className="manageButton">
             <Button color="info" size="sm" onClick={toggle}>
                 {friendsManage ? 'manage' : 'nevermind'}
